@@ -4,13 +4,8 @@ import DayContainer from './DayContainer';
 
 const { useEffect, useState } = React;
 
-// interface Props {
-//   zipCode?: string;
-// }
-
 function WeekContainer() {
   const weatherKey = apiConfig.openWeatherMapKey;
-  // const { zipCode } = props;
   const [zip, setZip] = useState('');
 
   const [weather, setWeather] = useState({
@@ -44,8 +39,6 @@ function WeekContainer() {
   }
 
   useEffect(() => {
-    console.log('ue zip', zip);
-    
     if (weather.fullWeather.length === 0) {
       retrieveWeatherData('08817');
       return;
@@ -55,19 +48,12 @@ function WeekContainer() {
   function handleZipChange(event: any) {
     event.preventDefault();
     setZip(event.target.value)
-    console.log('zipChange zip', event.target.value);
-    // if (event.target.value === 5) {
-    //   retrieveWeatherData(event.target.value);
-    // }
   }
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    console.log('handleSubmithit');
     
-    // if (event.target.value === 5) {
-      retrieveWeatherData(zip);
-    // }
+    retrieveWeatherData(zip);
   }
 
   return (
@@ -79,12 +65,13 @@ function WeekContainer() {
           <input type="text" value={zip} onChange={handleZipChange}/>
           <button onClick={handleSubmit}>submit</button>
         </label>
+      </form>
+
       <div className="Week-container">
       {weather.dailyWeather.map((d: any, idx: number) => {
         return <DayContainer data={d} idx={idx} key={idx} />
       })}
       </div>
-      </form>
     </div>
   )
 }
