@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as moment from 'moment';
 
 interface Props {
   data: {
@@ -30,6 +29,7 @@ function DayContainer(props: Props) {
   const { data, idx } = props;
   const cc = data.weather.map((c: any) => {
     return {
+      id: c.id,
       weatherType: c.main,
       weatherDescription: c.description,
       weatherIcon: c.icon,
@@ -43,9 +43,12 @@ function DayContainer(props: Props) {
   const dayIndex = date.getDay();
   const dayName = dayNameArray[dayIndex];
 
+  const imgURL = `owf owf-${cc[0].id} owf-5x`
+
   return (
     <div key={idx} className="Week-item">
       <h2 className="Day-header">{dayName}</h2>
+      <i className={imgURL} />
       <h3>{cc[0].weatherDescription}</h3>
       <h4 className="Day-item">Temp</h4>
         <h5>Actual: {data.main.temp}</h5>
