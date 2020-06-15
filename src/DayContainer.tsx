@@ -37,6 +37,7 @@ function DayContainer(props: Props) {
   });
 
   // TODO: figure out what time zone api data is and convert it to EST
+  // TODO: Round temps to whole numbers
   const dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const date = new Date(data.dt_txt);
   const dayIndex = date.getDay();
@@ -52,7 +53,7 @@ function DayContainer(props: Props) {
         <h5>High: {data.main.temp_max}</h5>
         <h5>Low: {data.main.temp_min}</h5>
       <h4>Cloud Cover: {data.clouds.all}%</h4>
-      <h4>Wind Speed: {data.wind.speed}</h4>
+      <h4>Wind Speed: {data.wind.speed}mph</h4>
     </div>
   )
 }
