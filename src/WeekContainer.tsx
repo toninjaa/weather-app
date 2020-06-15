@@ -38,24 +38,10 @@ function WeekContainer() {
   }, [])
 
   console.log('weather', weather);
-  function filterDailyWeather() {
-    weather.dailyWeather.map((d: any) => {
-      console.log('day', d);
-      return d.main.temp;
-    });
-  }
 
   return (
     <>
       <h1>Weekly</h1>
-      {/* {weather.fullWeather.map((w: any) => {
-        return w.map((t: any) => {
-        return (<p>Temp: {t.main.temp}</p>);
-      })
-      })} */}
-      
-      <br />
-      <h1>Daily</h1>
       {weather.dailyWeather.map((d: any, idx: number) => {
         return <DayContainer data={d} idx={idx} />
       })}
