@@ -2,6 +2,9 @@ import * as React from 'react';
 
 interface Props {
   data: {
+    clouds: {
+      all: string,
+    },
     main: {
       feels_like: string,
       grnd_level: string,
@@ -24,15 +27,24 @@ interface Props {
 function DayContainer(props: Props) {
   const { data, idx } = props;
   const cc = data.weather.map((c: any) => {
-    return c.description;
+    return {
+      weatherType: c.main,
+      weatherDescription: c.description,
+      weatherIcon: c.icon,
+    };
   });
 
   return (
-    <React.Fragment key={idx}>
+    <div key={idx} className="Week-item">
       <h2>Temp: {data.main.temp}</h2>
-      <h2>Cloud Cover: {cc}</h2>
+      {/* <p>{cc[0].weatherIcon}</p> */}
+      <h2>
+        Main Weather: {cc[0].weatherType}
+         - {cc[0].weatherDescription}
+      </h2>
+      <h2>Cloud Cover: {data.clouds.all}</h2>
       <h2>Wind Speed: {data.wind.speed}</h2>
-    </React.Fragment>
+    </div>
   )
 }
 

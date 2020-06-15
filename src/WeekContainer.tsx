@@ -40,12 +40,14 @@ function WeekContainer() {
   console.log('weather', weather);
 
   return (
-    <>
-      <h1>Weekly</h1>
+    <div>
+      <h1 className="Week-header">Weekly</h1>
+      <div className="Week-container">
       {weather.dailyWeather.map((d: any, idx: number) => {
-        return <DayContainer data={d} idx={idx} />
+        return <DayContainer data={d} idx={idx} key={idx} />
       })}
-    </>
+      </div>
+    </div>
   )
 }
 
