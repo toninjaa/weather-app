@@ -1,5 +1,6 @@
 import * as React from 'react';
 import apiConfig from './apiKeys';
+import DayContainer from './DayContainer';
 
 const { useEffect, useState } = React;
 
@@ -8,8 +9,8 @@ function WeekContainer() {
   const weatherURL = `http://api.openweathermap.org/data/2.5/forecast?zip=08817&units=imperial&APPID=${weatherKey}`;
 
   const [weather, setWeather] = useState({
-    fullWeather: {},
-    dailyWeather: {},
+    fullWeather: [],
+    dailyWeather: [],
     error: false,
   });
 
@@ -37,10 +38,27 @@ function WeekContainer() {
   }, [])
 
   console.log('weather', weather);
+  function filterDailyWeather() {
+    weather.dailyWeather.map((d: any) => {
+      console.log('day', d);
+      return d.main.temp;
+    });
+  }
 
   return (
     <>
-      <h1>Week Container</h1>
+      <h1>Weekly</h1>
+      {/* {weather.fullWeather.map((w: any) => {
+        return w.map((t: any) => {
+        return (<p>Temp: {t.main.temp}</p>);
+      })
+      })} */}
+      
+      <br />
+      <h1>Daily</h1>
+      {weather.dailyWeather.map((d: any, idx: number) => {
+        return <DayContainer data={d} idx={idx} />
+      })}
     </>
   )
 }
