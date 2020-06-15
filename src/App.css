@@ -17,13 +17,8 @@
 .Week-container {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  /* grid-template-rows: auto; */
-  justify-items: stretch;
-  justify-content: center;
+  justify-content: space-around;
   grid-auto-flow: row;
-  /* flex-direction: row;
-  align-items: center;
-  justify-content: center; */
 }
 
 .Week-item {
@@ -36,9 +31,11 @@
 }
 
 .Day-item {
-  
+  justify-content: flex-start;
 }
 
 .Day-header {
-  
+  background-color: blue;
+  color: white;
+  margin-top: 0;
 }

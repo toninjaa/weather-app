@@ -45,11 +45,14 @@ function DayContainer(props: Props) {
   return (
     <div key={idx} className="Week-item">
       <h2 className="Day-header">{dayName}</h2>
-      <h2>{cc[0].weatherDescription}</h2>
-      <h2 className="Day-item">Temp: {data.main.temp}</h2>
-      {/* <p>{cc[0].weatherIcon}</p> */}
-      <h2>Cloud Cover: {data.clouds.all}</h2>
-      <h2>Wind Speed: {data.wind.speed}</h2>
+      <h3>{cc[0].weatherDescription}</h3>
+      <h4 className="Day-item">Temp</h4>
+        <h5>Actual: {data.main.temp}</h5>
+        <h5>Real Feel: {data.main.feels_like}</h5>
+        <h5>High: {data.main.temp_max}</h5>
+        <h5>Low: {data.main.temp_min}</h5>
+      <h4>Cloud Cover: {data.clouds.all}%</h4>
+      <h4>Wind Speed: {data.wind.speed}</h4>
     </div>
   )
 }
