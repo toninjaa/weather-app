@@ -41,7 +41,7 @@ function WeekContainer() {
 
   return (
     <div>
-      <h1 className="Week-header">Weekly</h1>
+      <h1 className="Week-header">Weekly Forecast</h1>
       <div className="Week-container">
       {weather.dailyWeather.map((d: any, idx: number) => {
         return <DayContainer data={d} idx={idx} key={idx} />

@@ -1,10 +1,12 @@
 import * as React from 'react';
+import * as moment from 'moment';
 
 interface Props {
   data: {
     clouds: {
       all: string,
     },
+    dt_txt: string,
     main: {
       feels_like: string,
       grnd_level: string,
@@ -34,14 +36,18 @@ function DayContainer(props: Props) {
     };
   });
 
+  // TODO: figure out what time zone api data is and convert it to EST
+  const dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const date = new Date(data.dt_txt);
+  const dayIndex = date.getDay();
+  const dayName = dayNameArray[dayIndex];
+
   return (
     <div key={idx} className="Week-item">
-      <h2>Temp: {data.main.temp}</h2>
+      <h2 className="Day-header">{dayName}</h2>
+      <h2>{cc[0].weatherDescription}</h2>
+      <h2 className="Day-item">Temp: {data.main.temp}</h2>
       {/* <p>{cc[0].weatherIcon}</p> */}
-      <h2>
-        Main Weather: {cc[0].weatherType}
-         - {cc[0].weatherDescription}
-      </h2>
       <h2>Cloud Cover: {data.clouds.all}</h2>
       <h2>Wind Speed: {data.wind.speed}</h2>
     </div>
