@@ -7,7 +7,7 @@ const { useEffect, useState } = React;
 function WeekContainer() {
   const weatherKey = apiConfig.openWeatherMapKey;
   const [zip, setZip] = useState('');
-
+  const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyWeather: [],
@@ -38,8 +38,17 @@ function WeekContainer() {
     })
   }
 
+  function validZip(z: string) {
+    let valid = true;
+    if (z.length < 5) {
+      valid = false;
+    }
+    return valid;
+  }
+
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
+      setZip('08817');
       retrieveWeatherData('08817');
       return;
     }
@@ -52,17 +61,27 @@ function WeekContainer() {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    
-    retrieveWeatherData(zip);
+    if (validZip(zip)) {
+      setInputError(false);
+      retrieveWeatherData(zip);
+      return;
+    }
+    setInputError(true);
   }
+
+  useEffect(() => {
+    if (inputError) {
+      alert('Please enter valid zipcode');
+    }
+  }, [inputError]);
 
   return (
     <div>
-      <h1 className="Week-header">Weekly Forecast</h1>
+      <h1 className="Week-header">Weekly Forecast {zip.length === 5 ? `for ${zip}` : ''}</h1>
       <form>
         <label>
           ZipCode:
-          <input type="text" value={zip} onChange={handleZipChange}/>
+          <input type="text" value={zip} onChange={handleZipChange} />
           <button onClick={handleSubmit}>submit</button>
         </label>
       </form>
