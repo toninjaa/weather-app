@@ -1,11 +1,10 @@
 import * as React from 'react';
-import apiConfig from './apiKeys';
 import DayContainer from './DayContainer';
 
 const { useEffect, useState } = React;
 
 function WeekContainer() {
-  const weatherKey = apiConfig.openWeatherMapKey;
+  const weatherKey = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
   const [zip, setZip] = useState('');
   const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
