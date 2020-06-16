@@ -15,8 +15,6 @@ function WeekContainer() {
 
   function retrieveWeatherData(z: string) {
     const weatherURL = `http://api.openweathermap.org/data/2.5/forecast?zip=${z}&units=imperial&APPID=${weatherKey}`;
-
-    console.log('weatherURL', weatherURL);
     
     fetch(weatherURL).then((res) => {
       return res.json();
