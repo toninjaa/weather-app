@@ -37,7 +37,11 @@ function DayContainer(props: Props) {
   });
 
   // TODO: figure out what time zone api data is and convert it to EST
-  // TODO: Round temps to whole numbers
+  // * Round temps to whole numbers
+  // * switch favicon
+  // * update CRA docs
+  // * improve UX
+
   const dayNameArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const date = new Date(data.dt_txt);
   const dayIndex = date.getDay();
