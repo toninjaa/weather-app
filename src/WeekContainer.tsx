@@ -13,26 +13,62 @@ function WeekContainer() {
     error: false,
   });
 
-  function retrieveWeatherData(z: string) {
-    const weatherURL = `http://api.openweathermap.org/data/2.5/forecast?zip=${z}&units=imperial&APPID=${weatherKey}`;
+  async function retrieveWeatherData(z: string) {
+    const weatherURL = 'https://api.weather.gov/points/38.8894,-77.0352'
     
-    fetch(weatherURL).then((res) => {
-      return res.json();
+    let nextURL = '';
+    fetch(weatherURL).then(res => {
+      const data = res.json();
+      console.log('data', data);
+      return data;
     }).then((res) => {
-      const daily = res.list.filter((day: any) => {
-        return day.dt_txt.includes('18:00:00')
+      console.log('res', res);
+      nextURL = res.properties.forecast;
+      console.log('nextURL', nextURL);
+      // return nextURL;
+
+      fetch(nextURL).then(res => {
+        const finalData = res.json();
+        console.log('finalData', finalData);
+        return finalData;
+      }).then((res) => {
+        console.log('final res', res);
+        // do something with this data
+      }).catch((err) => {
+        console.log('Second fetch err', err);  
       });
-      setWeather({
-        ...weather,
-        fullWeather: res.list,
-        dailyWeather: daily,
-      });
-    }).catch((rej) => {
-      setWeather({
-        ...weather,
-        error: true,
-      });
-    })
+
+    }).catch((err) => {
+      console.log('fetch1 err', err);
+    });
+
+    // fetch(nextURL).then(res => {
+    //   const finalData = res.json();
+    //   console.log('finalData', finalData);
+    //   return finalData;
+    // }).then((res) => {
+    //   console.log('final res', res);
+    //   // do something with this data
+    // }).catch((err) => {
+    //   console.log('Second fetch err', err);  
+    // });
+    
+
+    
+    
+    // fetch(weatherURL).then((res) => {
+    //   console.log(res.json());
+      
+    //   return res.json();
+    // }).then((res) => {
+    //   console.log(res.properties);
+    //   fetch(res.properties.forecast).then((res) => {
+    //     console.log('2nd res', res.json());
+        
+    //     return res.json();
+    //   }).catch((err) => { console.log('err', err);
+    //   })
+    // })
   }
 
   function validZip(z: string) {
@@ -75,7 +111,7 @@ function WeekContainer() {
   return (
     <div>
       <h1 className="Week-header">Weekly Forecast {zip.length === 5 ? `for ${zip}` : ''}</h1>
-      <form>
+      {/* <form>
         <label>
           ZipCode:
           <input type="text" value={zip} onChange={handleZipChange} />
@@ -87,7 +123,7 @@ function WeekContainer() {
       {weather.dailyWeather.map((d: any, idx: number) => {
         return <DayContainer data={d} idx={idx} key={idx} />
       })}
-      </div>
+      </div> */}
     </div>
   )
 }
