@@ -4,7 +4,6 @@ import DayContainer from './DayContainer';
 const { useEffect, useState } = React;
 
 function WeekContainer() {
-  const weatherKey = process.env.REACT_APP_OPEN_WEATHER_MAP_API_KEY;
   const [zip, setZip] = useState('');
   const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
@@ -13,7 +12,7 @@ function WeekContainer() {
     error: false,
   });
 
-  async function retrieveWeatherData(z: string) {
+  async function retrieveWeatherData() {
     const weatherURL = 'https://api.weather.gov/points/38.8894,-77.0352'
     
     let nextURL = '';
@@ -33,7 +32,10 @@ function WeekContainer() {
         return finalData;
       }).then((res) => {
         console.log('final res', res);
-        // do something with this data
+        setWeather({
+          ...weather,
+          fullWeather: res.properties.periods,
+        })
       }).catch((err) => {
         console.log('Second fetch err', err);  
       });
@@ -41,72 +43,13 @@ function WeekContainer() {
     }).catch((err) => {
       console.log('fetch1 err', err);
     });
-
-    // fetch(nextURL).then(res => {
-    //   const finalData = res.json();
-    //   console.log('finalData', finalData);
-    //   return finalData;
-    // }).then((res) => {
-    //   console.log('final res', res);
-    //   // do something with this data
-    // }).catch((err) => {
-    //   console.log('Second fetch err', err);  
-    // });
-    
-
-    
-    
-    // fetch(weatherURL).then((res) => {
-    //   console.log(res.json());
-      
-    //   return res.json();
-    // }).then((res) => {
-    //   console.log(res.properties);
-    //   fetch(res.properties.forecast).then((res) => {
-    //     console.log('2nd res', res.json());
-        
-    //     return res.json();
-    //   }).catch((err) => { console.log('err', err);
-    //   })
-    // })
-  }
-
-  function validZip(z: string) {
-    let valid = true;
-    if (z.length < 5) {
-      valid = false;
-    }
-    return valid;
   }
 
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
-      setZip('08817');
-      retrieveWeatherData('08817');
-      return;
+      retrieveWeatherData();
     }
   }, []);
-
-  function handleZipChange(event: any) {
-    event.preventDefault();
-    setZip(event.target.value)
-  }
-
-  function handleSubmit(event: any) {
-    event.preventDefault();
-    if (validZip(zip)) {
-      setInputError(false);
-      retrieveWeatherData(zip);
-      return;
-    }
-    setInputError(true);
-  }
-
-  useEffect(() => {
-    if (inputError) {
-      alert('Please enter valid zipcode');
-    }
-  }, [inputError]);
 
   return (
     <div>
@@ -124,6 +67,10 @@ function WeekContainer() {
         return <DayContainer data={d} idx={idx} key={idx} />
       })}
       </div> */}
+      {weather.fullWeather.map((d: any, idx: number) => {
+        console.log('d', d);
+        return <DayContainer data={d} idx={idx} key={idx} />
+      })}
     </div>
   )
 }
