@@ -4,11 +4,11 @@ import DayContainer from './DayContainer';
 const { useEffect, useState } = React;
 
 function WeekContainer() {
-  const [zip, setZip] = useState('');
   const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
     fullWeather: [],
-    dailyWeather: [],
+    dailyStartWeather: [] as any[],
+    dailyEndWeather: [] as any[],
     error: false,
   });
 
@@ -18,24 +18,19 @@ function WeekContainer() {
     let nextURL = '';
     fetch(weatherURL).then(res => {
       const data = res.json();
-      console.log('data', data);
       return data;
     }).then((res) => {
-      console.log('res', res);
       nextURL = res.properties.forecast;
-      console.log('nextURL', nextURL);
-      // return nextURL;
 
       fetch(nextURL).then(res => {
         const finalData = res.json();
-        console.log('finalData', finalData);
         return finalData;
       }).then((res) => {
         console.log('final res', res);
         setWeather({
           ...weather,
           fullWeather: res.properties.periods,
-        })
+        });
       }).catch((err) => {
         console.log('Second fetch err', err);  
       });
@@ -45,34 +40,49 @@ function WeekContainer() {
     });
   }
 
+  // TODO: Displau loader while the api data is loading and get JSX to display once data is loaded locally
+  function splitDailyData() {
+    weather.fullWeather.forEach((forecast: any) => {
+      if (forecast.startTime.includes('18:00:00')) {
+        weather.dailyEndWeather.push(forecast);
+      } else {
+        weather.dailyStartWeather.push(forecast);
+      }
+    });
+    console.log('split state', weather);
+  }
+
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
       retrieveWeatherData();
     }
-  }, []);
+    splitDailyData();
+  }, [weather]);
 
-  return (
-    <div>
-      <h1 className="Week-header">Weekly Forecast {zip.length === 5 ? `for ${zip}` : ''}</h1>
-      {/* <form>
-        <label>
-          ZipCode:
-          <input type="text" value={zip} onChange={handleZipChange} />
-          <button onClick={handleSubmit}>submit</button>
-        </label>
-      </form>
+  console.log('outside func state', weather);
+  
+  if (weather.dailyStartWeather.length !== 0) {
+    return (
+      <div>
+        <h1 className="Week-header">5 Day Forecast</h1>
 
-      <div className="Week-container">
-      {weather.dailyWeather.map((d: any, idx: number) => {
-        return <DayContainer data={d} idx={idx} key={idx} />
-      })}
-      </div> */}
-      {weather.fullWeather.map((d: any, idx: number) => {
-        console.log('d', d);
-        return <DayContainer data={d} idx={idx} key={idx} />
-      })}
-    </div>
-  )
+        <div className="Week-container">
+          <h1>WORK</h1>
+          
+          {weather.dailyStartWeather.map((d: any, idx: number) => {
+            console.log('d', d);
+            return <DayContainer data={d} idx={idx} key={idx} />
+          })}
+          {weather.dailyEndWeather.map((d: any, idx: number) => {
+            console.log('d', d);
+            return <DayContainer data={d} idx={idx} key={idx} />
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  return <h1>Loading</h1>
 }
 
 export default WeekContainer;
