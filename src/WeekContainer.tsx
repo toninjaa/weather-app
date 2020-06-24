@@ -10,6 +10,7 @@ function WeekContainer() {
     dailyStartWeather: [] as any[],
     dailyEndWeather: [] as any[],
     error: false,
+    loading: true,
   });
 
   async function retrieveWeatherData() {
@@ -49,6 +50,10 @@ function WeekContainer() {
         weather.dailyStartWeather.push(forecast);
       }
     });
+    setWeather({
+      ...weather,
+      loading: false,
+    });
     console.log('split state', weather);
   }
 
@@ -57,32 +62,28 @@ function WeekContainer() {
       retrieveWeatherData();
     }
     splitDailyData();
-  }, [weather]);
+  }, [weather.loading]);
 
   console.log('outside func state', weather);
-  
-  if (weather.dailyStartWeather.length !== 0) {
-    return (
-      <div>
-        <h1 className="Week-header">5 Day Forecast</h1>
 
-        <div className="Week-container">
-          <h1>WORK</h1>
-          
-          {weather.dailyStartWeather.map((d: any, idx: number) => {
-            console.log('d', d);
-            return <DayContainer data={d} idx={idx} key={idx} />
-          })}
-          {weather.dailyEndWeather.map((d: any, idx: number) => {
-            console.log('d', d);
-            return <DayContainer data={d} idx={idx} key={idx} />
-          })}
-        </div>
+  return (
+    <>
+      {weather.loading && ( <h1>Loading</h1> )}
+
+      <h1 className="Week-header">5 Day Forecast</h1>
+
+      <div className="Week-container">        
+        {weather.dailyStartWeather.map((d: any, idx: number) => {
+          console.log('d', d);
+          return <DayContainer data={d} idx={idx} key={idx} />
+        })}
+        {weather.dailyEndWeather.map((d: any, idx: number) => {
+          console.log('d', d);
+          return <DayContainer data={d} idx={idx} key={idx} />
+        })}
       </div>
-    )
-  }
-
-  return <h1>Loading</h1>
+    </>
+  );
 }
 
 export default WeekContainer;
