@@ -3,8 +3,10 @@ import DayContainer from './DayContainer';
 
 const { useEffect, useState } = React;
 
+// TODO: add 'for NYC' to header
+// TODO: add geo-coding to allow input for new cities
 function WeekContainer() {
-  const [inputError, setInputError] = useState(false);
+  // const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyStartWeather: [] as any[],
@@ -27,7 +29,6 @@ function WeekContainer() {
         const finalData = res.json();
         return finalData;
       }).then((res) => {
-        console.log('final res', res);
         setWeather({
           ...weather,
           fullWeather: res.properties.periods,
@@ -74,7 +75,6 @@ function WeekContainer() {
       dailyEndWeather: arrSort(tmpArrB),
       loading: false,
     });
-    console.log('split state', weather);
   }
 
   useEffect(() => {
@@ -90,7 +90,7 @@ function WeekContainer() {
     <>
       {weather.loading && ( <h1>Loading</h1> )}
 
-      <h1 className="Week-header">5 Day Forecast</h1>
+      <h1 className="Week-header">7 Day Forecast</h1>
 
       <div className="Week-container">        
         <DayContainer

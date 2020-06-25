@@ -1,6 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
-  background-color: aqua;
+  background-color:#607d8b;
 }
 
 .App-header {
@@ -16,26 +21,33 @@
 
 .Week-container {
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  justify-content: space-around;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  justify-content: space-between;
   grid-auto-flow: row;
 }
 
 .Week-item {
   justify-items: start;
   border: 1px solid;
+  grid-auto-flow: column;
+  border-radius: 5px;
 }
 
 .Week-header {
   align-items: center;
+  padding: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .Day-item {
-  justify-content: flex-start;
+  padding: 3px;
 }
 
 .Day-header {
-  background-color: blue;
+  background-color: #37474f;
+  border-radius: 5px;
   color: white;
   margin-top: 0;
+  margin-bottom: 1em;
 }
+
