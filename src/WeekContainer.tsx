@@ -41,17 +41,37 @@ function WeekContainer() {
     });
   }
 
+  function arrSort(arr: any[]) {
+    arr.sort((a, b) => {
+      let dateA = new Date(a.startTime);
+      let dateB = new Date(b.startTime);
+      if (dateA > dateB) {
+        return 1;
+      }
+      if (dateA < dateB) {
+        return -1;
+      }
+      return 0;
+    })
+    return arr;
+  }
+
   // TODO: Displau loader while the api data is loading and get JSX to display once data is loaded locally
   function splitDailyData() {
+    let tmpArrA = [] as any[];
+    let tmpArrB = [] as any[];
     weather.fullWeather.forEach((forecast: any) => {
       if (forecast.startTime.includes('18:00:00')) {
-        weather.dailyEndWeather.push(forecast);
+        tmpArrB.push(forecast);
       } else {
-        weather.dailyStartWeather.push(forecast);
+        tmpArrA.push(forecast);
       }
     });
+
     setWeather({
       ...weather,
+      dailyStartWeather: arrSort(tmpArrA),
+      dailyEndWeather: arrSort(tmpArrB),
       loading: false,
     });
     console.log('split state', weather);
@@ -61,10 +81,10 @@ function WeekContainer() {
     if (weather.fullWeather.length === 0) {
       retrieveWeatherData();
     }
-    splitDailyData();
-  }, [weather.loading]);
-
-  console.log('outside func state', weather);
+    if (weather.dailyStartWeather.length === 0) {
+      splitDailyData();
+    }
+  }, [weather.loading, weather.dailyStartWeather.length]);
 
   return (
     <>
@@ -73,14 +93,10 @@ function WeekContainer() {
       <h1 className="Week-header">5 Day Forecast</h1>
 
       <div className="Week-container">        
-        {weather.dailyStartWeather.map((d: any, idx: number) => {
-          console.log('d', d);
-          return <DayContainer data={d} idx={idx} key={idx} />
-        })}
-        {weather.dailyEndWeather.map((d: any, idx: number) => {
-          console.log('d', d);
-          return <DayContainer data={d} idx={idx} key={idx} />
-        })}
+        <DayContainer
+          dayData={weather.dailyStartWeather}
+          nightData={weather.dailyEndWeather}
+        />
       </div>
     </>
   );
