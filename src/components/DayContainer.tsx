@@ -8,9 +8,9 @@ interface Props {
 function DayContainer(props: Props) {
   const { dayData, nightData } = props;
 
-  // TODO: switch favicon
-  // * update CRA docs
-  // * improve UX
+  // TODO: update readme
+  // TODO: improve UX
+  // TODO: add date number to day header
 
   // TODO: can add onclick to expand detailedForecast
   return (

@@ -1,22 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .App {
   text-align: center;
   background-color:#607d8b;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: aqua,
 }
 
 .Week-container {
@@ -24,6 +8,7 @@
   grid-template-columns: auto auto auto auto auto auto auto;
   justify-content: space-between;
   grid-auto-flow: row;
+  padding: 1em;
 }
 
 .Week-item {
@@ -31,11 +16,13 @@
   border: 1px solid;
   grid-auto-flow: column;
   border-radius: 5px;
+  padding: 0em 1em;
+  margin: 0em 0em 1em 1em;
 }
 
 .Week-header {
   align-items: center;
-  padding: 10px;
+  padding-top: 2em;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -47,6 +34,6 @@
   background-color: #37474f;
   border-radius: 5px;
   color: white;
-  margin-top: 0;
-  margin-bottom: 1em;
+  margin: 0em -.75em 1em;
+  padding: .5em;
 }
