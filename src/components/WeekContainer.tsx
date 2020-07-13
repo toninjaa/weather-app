@@ -99,18 +99,25 @@ function WeekContainer() {
     if (weather.dailyStartWeather.length === 0) {
       splitDailyData();
     }
+  
     // * Force error test
     // setWeather({
     //   ...weather,
     //   error: true,
-    //   errorMsg: 'error test working',
+    //   errorMsg: 'Sorry, a problem occurred trying to load the weather data. Please refresh the page to try again.',
+    // });
+
+    // * Force loader test
+    // setWeather({
+    //   ...weather,
+    //   loading: true,
     // });
   }, [weather.loading, weather.dailyStartWeather.length]);
 
   return (
     <>
       {weather.loading && (
-        <LoaderModal msg="Loading Weather Data" />
+        <LoaderModal msg="Loading Weather Data " />
       )}
 
       <h1 className="Week-header">7 Day Forecast for NYC</h1>

@@ -8,7 +8,6 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 
-// TODO: Add styling
 interface Props {
   open: boolean,
   msg: string,
@@ -21,7 +20,7 @@ export default function ErrorModal(props: Props) {
     <>
       <Dialog open={open}>
         <DialogTitle>
-          Error Loading Data
+          Unexpected Error
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
