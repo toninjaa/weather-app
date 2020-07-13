@@ -1,17 +1,18 @@
 import * as React from 'react';
 import DayContainer from './DayContainer';
+import ErrorModal from './ErrorModal';
 
 const { useEffect, useState } = React;
 
 // TODO: add 'for NYC' to header
 // TODO: add geo-coding to allow input for new cities
 function WeekContainer() {
-  // const [inputError, setInputError] = useState(false);
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyStartWeather: [] as any[],
     dailyEndWeather: [] as any[],
     error: false,
+    errorMsg: '',
     loading: true,
   });
 
@@ -34,11 +35,18 @@ function WeekContainer() {
           fullWeather: res.properties.periods,
         });
       }).catch((err) => {
-        console.log('Second fetch err', err);  
+        setWeather({
+          ...weather,
+          error: true,
+          errorMsg: err,
+        });
       });
-
     }).catch((err) => {
-      console.log('fetch1 err', err);
+      setWeather({
+        ...weather,
+        error: true,
+        errorMsg: err,
+      });
     });
   }
 
@@ -77,6 +85,14 @@ function WeekContainer() {
     });
   }
 
+  function handleErrorClose() {
+    setWeather({
+      ...weather,
+      error: false,
+      errorMsg: '',
+    });
+  }
+
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
       retrieveWeatherData();
@@ -90,12 +106,17 @@ function WeekContainer() {
     <>
       {weather.loading && ( <h1>Loading</h1> )}
 
-      <h1 className="Week-header">7 Day Forecast</h1>
+      <h1 className="Week-header">7 Day Forecast for NYC</h1>
 
       <div className="Week-container">        
         <DayContainer
           dayData={weather.dailyStartWeather}
           nightData={weather.dailyEndWeather}
+        />
+        <ErrorModal
+          open={weather.error}
+          msg={weather.errorMsg}
+          handleClose={handleErrorClose}
         />
       </div>
     </>
