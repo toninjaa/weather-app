@@ -1,10 +1,10 @@
 import * as React from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
+import LoaderModal from './LoaderModal';
 
 const { useEffect, useState } = React;
 
-// TODO: add 'for NYC' to header
 // TODO: add geo-coding to allow input for new cities
 function WeekContainer() {
   const [weather, setWeather] = useState({
@@ -65,7 +65,6 @@ function WeekContainer() {
     return arr;
   }
 
-  // TODO: Displau loader while the api data is loading and get JSX to display once data is loaded locally
   function splitDailyData() {
     let tmpArrA = [] as any[];
     let tmpArrB = [] as any[];
@@ -100,11 +99,19 @@ function WeekContainer() {
     if (weather.dailyStartWeather.length === 0) {
       splitDailyData();
     }
+    // * Force error test
+    // setWeather({
+    //   ...weather,
+    //   error: true,
+    //   errorMsg: 'error test working',
+    // });
   }, [weather.loading, weather.dailyStartWeather.length]);
 
   return (
     <>
-      {weather.loading && ( <h1>Loading</h1> )}
+      {weather.loading && (
+        <LoaderModal msg="Loading Weather Data" />
+      )}
 
       <h1 className="Week-header">7 Day Forecast for NYC</h1>
 

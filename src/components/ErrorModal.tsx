@@ -8,6 +8,7 @@ import {
   DialogContentText,
 } from '@material-ui/core';
 
+// TODO: Add styling
 interface Props {
   open: boolean,
   msg: string,
