@@ -1,7 +1,8 @@
 import * as React from 'react';
-// import { Button } from '@material-ui/core';
-// import DetailedDayContainer from './DetailedDayContainer';
+import { Button } from '@material-ui/core';
+import DetailedDayContainer from './DetailedDayContainer';
 
+const { useState } = React;
 interface Props {
   dayData: any,
   nightData: any,
@@ -9,6 +10,7 @@ interface Props {
 
 function DayContainer(props: Props) {
   const { dayData, nightData } = props;
+  const [showDetail, setShowDetail] = useState(false);
 
   // TODO: update readme
   // TODO: improve UX
@@ -27,11 +29,13 @@ function DayContainer(props: Props) {
     return date;
   }
 
-  // function handleDayClick(dayData: any) {
-  //   return (
-  //     <DetailedDayContainer dayData={dayData} />
-  //   )
-  // }
+  function handleDetailClick() {
+    setShowDetail(true);
+  }
+
+  function handleDetailClose() {
+    setShowDetail(false);
+  }
 
   return (
     <>
@@ -46,9 +50,17 @@ function DayContainer(props: Props) {
           <h3>{d.shortForecast}</h3>
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
-          {/* <Button onClick={handleDayClick(d)}>
+          
+          <Button onClick={handleDetailClick}>
             Detailed Forecast
-          </Button> */}
+          </Button>
+          
+          {showDetail && (
+            <DetailedDayContainer
+              dayData={d}
+              onClose={handleDetailClose}
+            />
+          )}
         </div>
       ))}
 
@@ -63,9 +75,17 @@ function DayContainer(props: Props) {
         <h4 className="Day-item">{n.shortForecast}</h4>
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
-        {/* <Button onClick={handleDayClick(n)}>
+        
+        <Button onClick={handleDetailClick}>
           Detailed Forecast
-        </Button> */}
+        </Button>
+        
+        {showDetail && (
+          <DetailedDayContainer
+            dayData={n}
+            onClose={handleDetailClose}
+          />
+        )}
       </div>
       ))}
     </>
