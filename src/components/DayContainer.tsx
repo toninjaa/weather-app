@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button } from '@material-ui/core';
-import DetailedDayContainer from './DetailedDayContainer';
+// import { Button } from '@material-ui/core';
+// import DetailedDayContainer from './DetailedDayContainer';
 
 interface Props {
   dayData: any,
@@ -14,7 +14,6 @@ function DayContainer(props: Props) {
   // TODO: improve UX
   // TODO: add date number to day header
   // TODO: can add onclick to expand to detailedForecast and also hourly
-  console.log(dayData);
   
   function getMonthandDay(dayWeather: any) {
     const d = new Date(dayWeather.startTime);
@@ -28,11 +27,11 @@ function DayContainer(props: Props) {
     return date;
   }
 
-  function handleDayClick(dayData: any) {
-    return (
-      <DetailedDayContainer dayData={dayData} />
-    )
-  }
+  // function handleDayClick(dayData: any) {
+  //   return (
+  //     <DetailedDayContainer dayData={dayData} />
+  //   )
+  // }
 
   return (
     <>
@@ -47,9 +46,9 @@ function DayContainer(props: Props) {
           <h3>{d.shortForecast}</h3>
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
-          <Button onClick={handleDayClick}>
+          {/* <Button onClick={handleDayClick(d)}>
             Detailed Forecast
-          </Button>
+          </Button> */}
         </div>
       ))}
 
@@ -64,9 +63,9 @@ function DayContainer(props: Props) {
         <h4 className="Day-item">{n.shortForecast}</h4>
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
-        <Button onClick={handleDayClick}>
+        {/* <Button onClick={handleDayClick(n)}>
           Detailed Forecast
-        </Button>
+        </Button> */}
       </div>
       ))}
     </>

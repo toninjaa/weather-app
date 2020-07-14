@@ -5,7 +5,7 @@ interface Props {
 }
 
 export default function DetailedDayContainer(props: Props){
-  const { dayData } = props;
+  // const { dayData } = props;
 
   return (
     <>
