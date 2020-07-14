@@ -12,10 +12,13 @@ export default function DetailedDayContainer(props: Props){
 
   return (
     <>
-      <h1>Detailed Day Beta</h1>
-      <p>{dayData.detailedForecast}</p>
-      
-      <Button onClick={onClose}>Close</Button>
+      <div className="Detail-modal-background">
+        <div className="Detail-modal">
+          <h1>Detailed Day Beta</h1>
+          <p>{dayData.detailedForecast}</p>
+          <Button onClick={onClose}>Close</Button>
+        </div>
+      </div>
     </>
   )
 }
