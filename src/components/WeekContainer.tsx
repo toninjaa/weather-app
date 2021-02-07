@@ -2,12 +2,9 @@ import * as React from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
-// import Header from './Header';
 
 const { useEffect, useState } = React;
 
-// TODO: add geo-coding to allow input for new cities
-// TODO: include hourly forecast option
 function WeekContainer() {
   const [weather, setWeather] = useState({
     fullWeather: [],

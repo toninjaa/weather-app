@@ -18,15 +18,7 @@ function DayContainer(props: Props) {
     detail: '',
     time: '',
   });
-  
-  // TODO: update readme
-  // TODO: improve UX
-  // -- anchor detail buttons to bottom
-  // -- better icons
-  // TODO: add date number to day header
-  // TODO: can add onclick to expand to detailedForecast and also hourly
-  // TODO: Clean up types - get rid of anys
-  
+    
   function getMonthandDay(dayWeather: DailyWeather) {
     const d = new Date(dayWeather.startTime);
     const day = d.getDate();

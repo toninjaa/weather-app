@@ -1,7 +1,3 @@
-// import * as React from 'react';
-
-// interface WeeklyWeather: []DailyWeather;
-
 interface DailyWeather {
   detailedForecast: string,
   endTime: string,
