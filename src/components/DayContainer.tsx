@@ -1,23 +1,33 @@
 import * as React from 'react';
 import { Button } from '@material-ui/core';
 import DetailedDayContainer from './DetailedDayContainer';
+import DailyWeather from './Day';
 
 const { useState } = React;
+
 interface Props {
-  dayData: any,
-  nightData: any,
+  dayData: DailyWeather[],
+  nightData: DailyWeather[],
 }
 
 function DayContainer(props: Props) {
   const { dayData, nightData } = props;
   const [showDetail, setShowDetail] = useState(false);
-
+  const [detail, setDetail] = useState({
+    name: '',
+    detail: '',
+    time: '',
+  });
+  
   // TODO: update readme
   // TODO: improve UX
+  // -- anchor detail buttons to bottom
+  // -- better icons
   // TODO: add date number to day header
   // TODO: can add onclick to expand to detailedForecast and also hourly
+  // TODO: Clean up types - get rid of anys
   
-  function getMonthandDay(dayWeather: any) {
+  function getMonthandDay(dayWeather: DailyWeather) {
     const d = new Date(dayWeather.startTime);
     const day = d.getDate();
     const monthNum = d.getMonth();
@@ -29,8 +39,24 @@ function DayContainer(props: Props) {
     return date;
   }
 
-  function handleDetailClick() {
+  function handleDetailClick(key: number, e: any, time: string) {
     setShowDetail(true);
+
+    if (time === "day") {
+      setDetail({
+        name: getMonthandDay(dayData[key]),
+        detail: dayData[key].detailedForecast,
+        time: "day",
+      });
+    }
+
+    if (time === "night") {
+      setDetail({
+        name: getMonthandDay(nightData[key]),
+        detail: nightData[key].detailedForecast,
+        time: "night",
+      });
+    }
   }
 
   function handleDetailClose() {
@@ -39,7 +65,7 @@ function DayContainer(props: Props) {
 
   return (
     <>
-      {dayData.map((d: any, i: number) => (
+      {dayData.map((d: DailyWeather, i: number) => (
         <div key={i} className="Week-item">
           <h2 className="Day-header">
             {d.name}
@@ -51,20 +77,13 @@ function DayContainer(props: Props) {
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
           
-          <Button onClick={handleDetailClick}>
+          <Button onClick={(e) => handleDetailClick(i, e, "day")}>
             Detailed Forecast
           </Button>
-          
-          {showDetail && (
-            <DetailedDayContainer
-              dayData={d}
-              onClose={handleDetailClose}
-            />
-          )}
         </div>
       ))}
 
-      {nightData.map((n: any, i: number) => (
+      {nightData.map((n: DailyWeather, i: number) => (
       <div key={i} className="Week-item">
         <h2 className="Day-header">
           {n.name}
@@ -76,18 +95,20 @@ function DayContainer(props: Props) {
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
         
-        <Button onClick={handleDetailClick}>
+        <Button onClick={(e) => handleDetailClick(i, e, "night")}>
           Detailed Forecast
         </Button>
-        
-        {showDetail && (
-          <DetailedDayContainer
-            dayData={n}
-            onClose={handleDetailClose}
-          />
-        )}
       </div>
       ))}
+
+      {showDetail && (
+        <DetailedDayContainer
+          dayName={detail.name}
+          dayData={detail.detail}
+          time={detail.time}
+          onClose={handleDetailClose}
+        />
+      )}
     </>
   )
 }

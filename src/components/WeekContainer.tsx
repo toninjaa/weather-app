@@ -2,7 +2,7 @@ import * as React from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
-import Header from './Header';
+// import Header from './Header';
 
 const { useEffect, useState } = React;
 
