@@ -20,15 +20,28 @@ function WeekContainer() {
     
     let nextURL = '';
     fetch(weatherURL).then(res => {
+      console.log("first res (fetch):", res);
+      
       const data = res.json();
+      console.log("first data:", data);
+      
       return data;
     }).then((res) => {
+      console.log("second res: ", res);
+      
+      // this is where we can call the hourly url
       nextURL = res.properties.forecast;
 
       fetch(nextURL).then(res => {
+        console.log("third res (fetch): ", res);
+        
         const finalData = res.json();
+        console.log("finalData: ", finalData);
+        
         return finalData;
       }).then((res) => {
+        console.log("fourth res: ", res);
+        
         setWeather({
           ...weather,
           fullWeather: res.properties.periods,
