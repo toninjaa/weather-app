@@ -1,38 +1,60 @@
 .App {
   text-align: center;
+  background-color:#607d8b;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Week-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto;
+  justify-content: space-between;
+  grid-auto-flow: row;
+  padding: 1em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Week-item {
+  justify-items: start;
+  border: 1px solid;
+  grid-auto-flow: column;
+  border-radius: 5px;
+  padding: 0em 1em;
+  margin: 0em 0em 1em 1em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.Week-header {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding-top: 2em;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.Day-item {
+  padding: 0em .25em 0em;
+}
+
+.Day-header {
+  background-color: #37474f;
+  border-radius: 5px;
   color: white;
+  margin: 0em -.75em 1em;
+  padding: .5em;
 }
 
-.App-link {
-  color: #61dafb;
+.Detail-modal-background {
+  /* display: none; Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Detail-modal {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
 }
