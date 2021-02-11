@@ -11,7 +11,7 @@ interface Props {
 }
 
 function DayContainer(props: Props) {
-  const { dayData, nightData } = props;
+  const { dayData, nightData } = props;  
   const [showDetail, setShowDetail] = useState(false);
   const [detail, setDetail] = useState({
     name: '',
@@ -55,6 +55,22 @@ function DayContainer(props: Props) {
     setShowDetail(false);
   }
 
+  console.log("dayData", dayData, "nightData", nightData);
+  function determineIcon(weather: string) {
+    if (weather.includes("Snow")) {
+      return "/snowflake.svg";
+    }
+    if (weather.includes("Rain")) {
+      return "/rain.svg";
+    }
+    if (weather.includes("Sunny")) {
+      return "/sun.svg";
+    }
+    if (weather.includes("Cloudy")) {
+      return "/cloud.svg";
+    }
+  }
+
   return (
     <>
       {dayData.map((d: DailyWeather, i: number) => (
@@ -64,7 +80,13 @@ function DayContainer(props: Props) {
             <br/>
             {getMonthandDay(d)}
           </h2>
-          <img src={d.icon} alt="weather icon" />
+          <img
+            className="Icons"
+            src={determineIcon(d.shortForecast)}
+            alt="weather icon"
+          />
+
+          {/* <img src={d.icon} alt="weather icon" /> */}
           <h3>{d.shortForecast}</h3>
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
@@ -82,7 +104,7 @@ function DayContainer(props: Props) {
           <br />
           {getMonthandDay(n)}
         </h2>
-        <img src={n.icon} alt="weather icon" />
+        <img width="100px" src={determineIcon(n.shortForecast)} alt="weather icon" />
         <h4 className="Day-item">{n.shortForecast}</h4>
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
