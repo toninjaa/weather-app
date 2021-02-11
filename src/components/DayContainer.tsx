@@ -85,8 +85,6 @@ function DayContainer(props: Props) {
             src={determineIcon(d.shortForecast)}
             alt="weather icon"
           />
-
-          {/* <img src={d.icon} alt="weather icon" /> */}
           <h3>{d.shortForecast}</h3>
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
@@ -104,7 +102,11 @@ function DayContainer(props: Props) {
           <br />
           {getMonthandDay(n)}
         </h2>
-        <img width="100px" src={determineIcon(n.shortForecast)} alt="weather icon" />
+        <img
+          className="Icons"
+          src={determineIcon(n.shortForecast)}
+          alt="weather icon"
+        />
         <h4 className="Day-item">{n.shortForecast}</h4>
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
