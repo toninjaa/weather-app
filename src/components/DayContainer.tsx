@@ -55,8 +55,7 @@ function DayContainer(props: Props) {
     setShowDetail(false);
   }
 
-  console.log("dayData", dayData, "nightData", nightData);
-  function determineIcon(weather: string) {
+  function determineIcon(weather: string, time: string) {
     if (weather.includes("Snow")) {
       return "/snowflake.svg";
     }
@@ -64,9 +63,18 @@ function DayContainer(props: Props) {
       return "/rain.svg";
     }
     if (weather.includes("Sunny")) {
+      if (weather.includes("Partly")) {
+        return "/partly_cloudy.svg";
+      }
       return "/sun.svg";
     }
     if (weather.includes("Cloudy")) {
+      if (weather.includes("Partly") && time === "day") {
+        return "/partly_cloudy.svg";
+      }
+      if (weather.includes("Partly") && time === "night") {
+        return "/moon_cloudy.svg";
+      }
       return "/cloud.svg";
     }
     if (weather.includes("Sleet")) {
@@ -85,7 +93,7 @@ function DayContainer(props: Props) {
           </h2>
           <img
             className="Icons"
-            src={determineIcon(d.shortForecast)}
+            src={determineIcon(d.shortForecast, "day")}
             alt="weather icon"
           />
           <h3>{d.shortForecast}</h3>
@@ -110,7 +118,7 @@ function DayContainer(props: Props) {
         </h2>
         <img
           className="Icons"
-          src={determineIcon(n.shortForecast)}
+          src={determineIcon(n.shortForecast, "night")}
           alt="weather icon"
         />
         <h4 className="Day-item">{n.shortForecast}</h4>
