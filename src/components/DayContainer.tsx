@@ -69,6 +69,9 @@ function DayContainer(props: Props) {
     if (weather.includes("Cloudy")) {
       return "/cloud.svg";
     }
+    if (weather.includes("Sleet")) {
+      return "/sleet.svg";
+    }
   }
 
   return (
@@ -89,7 +92,10 @@ function DayContainer(props: Props) {
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
           <h4>Wind Speed: {d.windSpeed}</h4>
           
-          <Button onClick={(e) => handleDetailClick(i, e, "day")}>
+          <Button
+            variant="contained"
+            onClick={(e) => handleDetailClick(i, e, "day")}
+          >
             Detailed Forecast
           </Button>
         </div>
@@ -111,7 +117,7 @@ function DayContainer(props: Props) {
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
         
-        <Button onClick={(e) => handleDetailClick(i, e, "night")}>
+        <Button variant="contained" onClick={(e) => handleDetailClick(i, e, "night")}>
           Detailed Forecast
         </Button>
       </div>
