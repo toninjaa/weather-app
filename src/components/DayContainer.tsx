@@ -117,7 +117,10 @@ function DayContainer(props: Props) {
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
         <h4>Wind Speed: {n.windSpeed}</h4>
         
-        <Button variant="contained" onClick={(e) => handleDetailClick(i, e, "night")}>
+        <Button
+          variant="contained"
+          onClick={(e) => handleDetailClick(i, e, "night")}
+        >
           Detailed Forecast
         </Button>
       </div>
