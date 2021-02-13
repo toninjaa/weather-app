@@ -12,11 +12,11 @@
 }
 
 .Week-item {
-  justify-items: start;
+  align-items: stretch;
   border: 1px solid;
-  grid-auto-flow: column;
   border-radius: 5px;
-  padding: 0em 1em;
+  display: grid;
+  padding: 0em 1em 1em;
   margin: 0em 0em 1em 1em;
 }
 
@@ -70,5 +70,6 @@
 
 .Icons {
   width: 100px;
+  justify-self: center;
   animation: icons 2s infinite;
 }
