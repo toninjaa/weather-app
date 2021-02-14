@@ -16,8 +16,8 @@ function WeekContainer() {
   });
 
   async function retrieveWeatherData() {
-    const weatherURL = 'https://api.weather.gov/points/38.8894,-77.0352'
-    
+    const weatherURL = 'https://api.weather.gov/points/40.5187,-74.4121'
+
     let nextURL = '';
     fetch(weatherURL).then(res => {
       const data = res.json();
@@ -119,7 +119,7 @@ function WeekContainer() {
         <LoaderModal msg="Loading Weather Data " />
       )}
 
-      <h1 className="Week-header">7 Day Forecast for NYC</h1>
+      <h1 className="Week-header">7 Day Forecast for Edison, NJ</h1>
 
       <div className="Week-container">        
         <DayContainer

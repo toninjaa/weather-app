@@ -80,6 +80,9 @@ function DayContainer(props: Props) {
     if (weather.includes("Sleet")) {
       return "/sleet.svg";
     }
+    if (weather.includes("Drizzle")) {
+      return "/rain.svg";
+    }
   }
 
   return (
