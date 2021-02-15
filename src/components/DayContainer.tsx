@@ -18,6 +18,7 @@ function DayContainer(props: Props) {
     detail: '',
     time: '',
   });
+  let altIcon = "Weather Icon";
     
   function getMonthandDay(dayWeather: DailyWeather) {
     const d = new Date(dayWeather.startTime);
@@ -57,38 +58,49 @@ function DayContainer(props: Props) {
 
   function determineIcon(weather: string, time: string) {
     if (weather.includes("Snow")) {
+      altIcon = "Snowflake Icon";
       return "/snowflake.svg";
     }
     if (weather.includes("Rain")) {
+      altIcon = "Raindrop Icon";
       return "/rain.svg";
     }
     if (weather.includes("Sunny")) {
       if (weather.includes("Partly")) {
+        altIcon = "Sun With Clouds Icon";
         return "/partly_cloudy.svg";
       }
+      altIcon = "Sun Icon";
       return "/sun.svg";
     }
     if (weather.includes("Cloudy")) {
       if (weather.includes("Partly") && time === "day") {
+        altIcon = "Sun With Clouds Icon";
         return "/partly_cloudy.svg";
       }
       if (weather.includes("Partly") && time === "night") {
+        altIcon = "Moon WIth Clouds Icon"
         return "/moon_cloudy.svg";
       }
+      altIcon = "Cloud Icon";
       return "/cloud.svg";
     }
     if (weather.includes("Clear")) {
       if (time === "day") {
+        altIcon = "Sun Icon";
         return "/sun.svg";
       }
       if (time === "night") {
+        altIcon = "Moon Icon";
         return "/moon.svg";
       }
     }
     if (weather.includes("Sleet")) {
+      altIcon = "Sleet Icon";
       return "/sleet.svg";
     }
     if (weather.includes("Drizzle")) {
+      altIcon = "Raindrop Icon";
       return "/rain.svg";
     }
   }
@@ -105,7 +117,7 @@ function DayContainer(props: Props) {
           <img
             className="Icons"
             src={determineIcon(d.shortForecast, "day")}
-            alt="weather icon"
+            alt={altIcon}
           />
           <h3>{d.shortForecast}</h3>
           <h4 className="Day-item">Temp: {d.temperature}°F</h4>
@@ -130,7 +142,7 @@ function DayContainer(props: Props) {
         <img
           className="Icons"
           src={determineIcon(n.shortForecast, "night")}
-          alt="weather icon"
+          alt={altIcon}
         />
         <h4 className="Day-item">{n.shortForecast}</h4>
         <h4 className="Day-item">Temp: {n.temperature}°F</h4>
