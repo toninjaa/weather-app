@@ -34,14 +34,14 @@ function WeekContainer() {
           fullWeather: res.properties.periods,
         });
       }).catch((err) => {
-        setWeather({
+        return setWeather({
           ...weather,
           error: true,
           errorMsg: err,
         });
       });
     }).catch((err) => {
-      setWeather({
+      return setWeather({
         ...weather,
         error: true,
         errorMsg: err,
