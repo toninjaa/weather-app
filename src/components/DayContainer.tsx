@@ -77,6 +77,14 @@ function DayContainer(props: Props) {
       }
       return "/cloud.svg";
     }
+    if (weather.includes("Clear")) {
+      if (time === "day") {
+        return "/sun.svg";
+      }
+      if (time === "night") {
+        return "/moon.svg";
+      }
+    }
     if (weather.includes("Sleet")) {
       return "/sleet.svg";
     }
