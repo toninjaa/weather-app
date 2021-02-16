@@ -1,23 +1,33 @@
 import * as React from 'react';
 import {
   AppBar,
-  InputAdornment,
-  InputBase,
+  // InputAdornment,
+  // InputBase,
+  TextField,
   Toolbar,
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+// import { Search } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
   appBar: {
     backgroundColor: '#282c34',
+    // display: 'grid',
     justifyContent: 'space-between',
+    // alignItems: 'space-between',
   },
-  searchBar: {
+  // searchBar: {
+  //   posiiton: 'relative',
+  //   marginRight: 0,
+  //   marginLeft: 'auto',
+  // },
+  inputs: {
+    // display: 'grid',
     posiiton: 'relative',
     marginRight: 0,
     marginLeft: 'auto',
+    color: '#fff',
   },
   search: {
     color: '#fff',
@@ -33,7 +43,14 @@ export default function Header() {
           <Typography>
             Weather Forecast
           </Typography>
-          <div className={classes.searchBar}>
+
+          <div className={classes.inputs}>
+            <form>
+              <TextField id="latitude" label="latitude" variant="outlined"/>
+              <TextField id="longitude" label="longitude" variant="outlined" />
+            </form>
+          </div>
+          {/* <div className={classes.searchBar}>
             <Search />
             <InputBase
               className={classes.search} 
@@ -44,7 +61,7 @@ export default function Header() {
                 </InputAdornment>
               }}
             />
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
     </>
