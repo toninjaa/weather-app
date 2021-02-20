@@ -73,3 +73,10 @@
   justify-self: center;
   animation: icons 2s infinite;
 }
+
+.Inputs {
+  margin-top: 50px;
+  padding-top: 20px;
+  display: grid;
+
+}

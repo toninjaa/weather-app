@@ -2,10 +2,18 @@ import * as React from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
+import NumMask from '../utils/NumMask';
+import {
+  Button,
+  Checkbox,
+} from '@material-ui/core';
 
 const { useEffect, useState } = React;
 
 function WeekContainer() {
+  const [lat, setLat] = useState("");
+  const [long, setLong] = useState("");
+  const [url, setUrl] = useState('https://api.weather.gov/points/40.5187,-74.4121')
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyStartWeather: [] as any[],
@@ -13,13 +21,49 @@ function WeekContainer() {
     error: false,
     errorMsg: '',
     loading: true,
+    inputError: false,
   });
 
-  async function retrieveWeatherData() {
-    const weatherURL = 'https://api.weather.gov/points/40.5187,-74.4121'
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.currentTarget.id === "latitude") {
+      setLat(e.currentTarget.value)
+    }
+    if (e.currentTarget.id === "longitude") {
+      setLong(e.currentTarget.value)
+    }
+  }
 
+  function handleSubmit() {
+    let tempLat = "";
+    let tempLong = "";
+
+    if (lat.length <= 8) {
+      tempLat = lat;
+    }
+    if (long.length <= 8) {
+      tempLong = long;
+    }
+
+    console.log("lat", lat, "long", long, "tempLat", tempLat, "tempLong", tempLong);
+    
+    if (tempLat !== "" && tempLong !== "") {
+      setUrl(`https://api.weather.gov/points/${tempLat},${tempLong}`)
+      retrieveWeatherData(url)
+    } else {
+      setWeather({
+        ...weather,
+        inputError: true,
+      });
+    }
+  }
+
+  // useEffect(() => {
+
+  // })
+
+  async function retrieveWeatherData(u: string) {
     let nextURL = '';
-    fetch(weatherURL).then(res => {
+    fetch(url).then(res => {
       const data = res.json();
       return data;
     }).then((res) => {
@@ -93,7 +137,7 @@ function WeekContainer() {
 
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
-      retrieveWeatherData();
+      retrieveWeatherData(url);
     }
     if (weather.dailyStartWeather.length === 0) {
       splitDailyData();
@@ -111,13 +155,37 @@ function WeekContainer() {
     //   ...weather,
     //   loading: true,
     // });
-  }, [weather.loading, weather.dailyStartWeather.length]);
+  }, [weather.loading, weather.dailyStartWeather.length, url]);
 
   return (
     <>
       {weather.loading && (
         <LoaderModal msg="Loading Weather Data " />
       )}
+
+      <div className="Inputs">
+        <form>
+          <NumMask
+            id="latitude"
+            label="latitude"
+            variant="outlined"
+            onChange={handleChange}
+            error={weather.inputError}
+            helperText="Enter the latitude of your location to the 4th decimal point"
+          />
+          <Checkbox />
+          <NumMask
+            id="longitude"
+            label="longitude"
+            variant="outlined"
+            onChange={handleChange}
+            error={weather.inputError}
+            helperText="Enter the longitude of your location to the 4th decimal point"
+          />
+          <Checkbox />
+          <Button onClick={handleSubmit}>Submit</Button>
+        </form>
+      </div>
 
       <h1 className="Week-header">7 Day Forecast for Edison, NJ</h1>
 
