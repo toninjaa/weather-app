@@ -2,7 +2,8 @@ import * as React from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
-import NumMask from '../utils/NumMask';
+import LatMask from '../utils/LatMask';
+import LongMask from '../utils/LongMask';
 import {
   Button,
   Checkbox,
@@ -19,7 +20,7 @@ function WeekContainer() {
     dailyStartWeather: [] as any[],
     dailyEndWeather: [] as any[],
     error: false,
-    errorMsg: '',
+    errorMsg: 'Error',
     loading: true,
     inputError: false,
   });
@@ -57,18 +58,22 @@ function WeekContainer() {
     }
   }
 
-  // useEffect(() => {
-
-  // })
-
   async function retrieveWeatherData(u: string) {
     let nextURL = '';
-    fetch(url).then(res => {
+    fetch(u).then(res => {
+      if (!res || res.status !== 200) {
+        setWeather({
+        ...weather,
+        error: true,
+        errorMsg: 'Error fetching initial request',
+        });
+      }
       const data = res.json();
       return data;
     }).then((res) => {
       nextURL = res.properties.forecast;
-
+      console.log('nexturl', nextURL);
+      
       fetch(nextURL).then(res => {
         const finalData = res.json();
         return finalData;
@@ -81,14 +86,16 @@ function WeekContainer() {
         return setWeather({
           ...weather,
           error: true,
-          errorMsg: err,
+          // errorMsg: err,
+          errorMsg: 'poop',
         });
       });
     }).catch((err) => {
       return setWeather({
         ...weather,
         error: true,
-        errorMsg: err,
+        // errorMsg: err,
+        errorMsg: 'poop2',
       });
     });
   }
@@ -165,7 +172,7 @@ function WeekContainer() {
 
       <div className="Inputs">
         <form>
-          <NumMask
+          <LatMask
             id="latitude"
             label="latitude"
             variant="outlined"
@@ -174,7 +181,7 @@ function WeekContainer() {
             helperText="Enter the latitude of your location to the 4th decimal point"
           />
           <Checkbox />
-          <NumMask
+          <LongMask
             id="longitude"
             label="longitude"
             variant="outlined"
