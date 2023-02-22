@@ -1,4 +1,4 @@
-Weather App
+# Weather App!
 
 This is still a work in progress and not currently deployed anywhere, but if you were so bold as to run this locally, just use the `start` script.
 
