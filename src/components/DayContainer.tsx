@@ -59,49 +59,49 @@ function DayContainer(props: Props) {
   function determineIcon(weather: string, time: string) {
     if (weather.includes("Snow")) {
       altIcon = "Snowflake Icon";
-      return "/snowflake.svg";
+      return './weather-app/snowflake.svg';
     }
     if (weather.includes("Rain")) {
       altIcon = "Raindrop Icon";
-      return "/rain.svg";
+      return './weather-app/rain.svg';
     }
     if (weather.includes("Sunny")) {
       if (weather.includes("Partly")) {
         altIcon = "Sun With Clouds Icon";
-        return "/partly_cloudy.svg";
+        return './weather-app/partly_cloudy.svg';
       }
       altIcon = "Sun Icon";
-      return "/sun.svg";
+      return './weather-app/sun.svg';
     }
     if (weather.includes("Cloudy")) {
       if (weather.includes("Partly") && time === "day") {
         altIcon = "Sun With Clouds Icon";
-        return "/partly_cloudy.svg";
+        return './weather-app/partly_cloudy.svg';
       }
       if (weather.includes("Partly") && time === "night") {
         altIcon = "Moon WIth Clouds Icon"
-        return "/moon_cloudy.svg";
+        return './weather-app/moon_cloudy.svg';
       }
       altIcon = "Cloud Icon";
-      return "/cloud.svg";
+      return './weather-app/cloud.svg';
     }
     if (weather.includes("Clear")) {
       if (time === "day") {
         altIcon = "Sun Icon";
-        return "/sun.svg";
+        return './weather-app/sun.svg';
       }
       if (time === "night") {
         altIcon = "Moon Icon";
-        return "/moon.svg";
+        return './weather-app/moon.svg';
       }
     }
     if (weather.includes("Sleet")) {
       altIcon = "Sleet Icon";
-      return "/sleet.svg";
+      return './weather-app/sleet.svg';
     }
     if (weather.includes("Drizzle")) {
       altIcon = "Raindrop Icon";
-      return "/rain.svg";
+      return './weather-app/rain.svg';
     }
   }
 
