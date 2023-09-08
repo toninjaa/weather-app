@@ -57,51 +57,48 @@ function DayContainer(props: Props) {
   }
 
   function determineIcon(weather: string, time: string) {
+    const env = window.location.href.includes("local") ? "./weather-app" : "."; 
     if (weather.includes("Snow")) {
       altIcon = "Snowflake Icon";
-      return './weather-app/snowflake.svg';
+      return `${env}/snowflake.svg`;
     }
-    if (weather.includes("Rain")) {
+    if (weather.includes("Rain") || weather.includes("Drizzle") || weather.includes("Showers")) {
       altIcon = "Raindrop Icon";
-      return './weather-app/rain.svg';
+      return `${env}/rain.svg`;
     }
     if (weather.includes("Sunny")) {
       if (weather.includes("Partly")) {
         altIcon = "Sun With Clouds Icon";
-        return './weather-app/partly_cloudy.svg';
+        return `${env}/partly_cloudy.svg`;
       }
       altIcon = "Sun Icon";
-      return './weather-app/sun.svg';
+      return `${env}/sun.svg`;
     }
     if (weather.includes("Cloudy")) {
       if (weather.includes("Partly") && time === "day") {
         altIcon = "Sun With Clouds Icon";
-        return './weather-app/partly_cloudy.svg';
+        return `${env}/partly_cloudy.svg`;
       }
       if (weather.includes("Partly") && time === "night") {
         altIcon = "Moon WIth Clouds Icon"
-        return './weather-app/moon_cloudy.svg';
+        return `${env}/moon_cloudy.svg`;
       }
       altIcon = "Cloud Icon";
-      return './weather-app/cloud.svg';
+      return `${env}/cloud.svg`;
     }
     if (weather.includes("Clear")) {
       if (time === "day") {
         altIcon = "Sun Icon";
-        return './weather-app/sun.svg';
+        return `${env}/sun.svg`;
       }
       if (time === "night") {
         altIcon = "Moon Icon";
-        return './weather-app/moon.svg';
+        return `${env}/moon.svg`;
       }
     }
     if (weather.includes("Sleet")) {
       altIcon = "Sleet Icon";
-      return './weather-app/sleet.svg';
-    }
-    if (weather.includes("Drizzle")) {
-      altIcon = "Raindrop Icon";
-      return './weather-app/rain.svg';
+      return `${env}/sleet.svg`;
     }
   }
 

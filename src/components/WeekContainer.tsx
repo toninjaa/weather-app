@@ -11,43 +11,47 @@ function WeekContainer() {
     dailyStartWeather: [] as any[],
     dailyEndWeather: [] as any[],
     error: false,
-    errorMsg: '',
+    errorMsg: 'We\'re sorry, the weather API\'s server is temporarily down. Please try again later',
     loading: true,
   });
 
   async function retrieveWeatherData() {
-    const weatherURL = 'https://api.weather.gov/points/40.5187,-74.4121'
+    setWeather({
+      ...weather,
+      loading: true,
+    });
+    
+    const weatherURL = 'https://api.weather.gov/points/40.71427,-74.00597'
+    const res1 = await fetch(weatherURL);
+    // if (res1.status === 200) {
+    if (res1) {
+      const data = await res1.json();
+      if (data) {
+        const nextURL = data.properties.forecast;
+        const res2 = await fetch(nextURL);
 
-    let nextURL = '';
-    fetch(weatherURL).then(res => {
-      const data = res.json();
-      return data;
-    }).then((res) => {
-      nextURL = res.properties.forecast;
+        // if (res2.status === 200) {
+        if (res2) {
+          const finalData = await res2.json();
+          if (finalData) {
+            setWeather({
+              ...weather,
+              fullWeather: finalData.properties.periods,
+              loading: false,
+            });
+            return;
+          }
+        }
+      }
 
-      fetch(nextURL).then(res => {
-        const finalData = res.json();
-        return finalData;
-      }).then((res) => {
-        setWeather({
-          ...weather,
-          fullWeather: res.properties.periods,
-        });
-      }).catch((err) => {
-        return setWeather({
-          ...weather,
-          error: true,
-          errorMsg: err,
-        });
-      });
-    }).catch((err) => {
-      return setWeather({
+      setWeather({
         ...weather,
         error: true,
-        errorMsg: err,
+        loading: false,
       });
-    });
+    }
   }
+  console.log(weather);
 
   function arrSort(arr: any[]) {
     arr.sort((a, b) => {
@@ -94,6 +98,7 @@ function WeekContainer() {
   useEffect(() => {
     if (weather.fullWeather.length === 0) {
       retrieveWeatherData();
+      return;
     }
     if (weather.dailyStartWeather.length === 0) {
       splitDailyData();
@@ -111,16 +116,14 @@ function WeekContainer() {
     //   ...weather,
     //   loading: true,
     // });
-  }, [weather.loading, weather.dailyStartWeather.length]);
+  }, [weather.fullWeather.length]);
 
   return (
     <>
-      {weather.loading && (
-        <LoaderModal msg="Loading Weather Data " />
-      )}
+      <LoaderModal msg="Loading Weather Data..." open={weather.loading} />
 
-      <h1 className="Week-header">7 Day Forecast for Edison, NJ</h1>
-
+      <h1 className="Week-header">7 Day Forecast for NYC</h1>
+      
       <div className="Week-container">        
         <DayContainer
           dayData={weather.dailyStartWeather}

@@ -8,17 +8,17 @@ import {
 
 interface Props {
   msg: string,
+  open: boolean,
 }
 
 export default function LoaderModal(props: Props) {
-  const { msg } = props;
+  const { msg, open } = props;
   return (
     <>
-      <Dialog open>
+      <Dialog open={open}>
         <DialogContent>
           <DialogContentText>
-            {msg}
-            <CircularProgress size={20} />
+            {msg && <CircularProgress size={20} />}
           </DialogContentText>
         </DialogContent>
       </Dialog>

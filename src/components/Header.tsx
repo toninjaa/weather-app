@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   AppBar,
-  InputAdornment,
   InputBase,
   Toolbar,
   Typography,
@@ -34,15 +33,10 @@ export default function Header() {
             Weather Forecast
           </Typography>
           <div className={classes.searchBar}>
-            <Search />
             <InputBase
               className={classes.search} 
-              placeholder="Search..."
-              inputProps={{
-                startAdornment: <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              }}
+              placeholder="Coming eventually..."
+              startAdornment={<Search />}
             />
           </div>
         </Toolbar>
