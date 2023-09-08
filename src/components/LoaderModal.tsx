@@ -18,7 +18,8 @@ export default function LoaderModal(props: Props) {
       <Dialog open={open}>
         <DialogContent>
           <DialogContentText>
-            {msg && <CircularProgress size={20} />}
+            {msg}
+            <CircularProgress size={20} />
           </DialogContentText>
         </DialogContent>
       </Dialog>
