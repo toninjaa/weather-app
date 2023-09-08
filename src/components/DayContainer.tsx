@@ -25,7 +25,7 @@ function DayContainer(props: Props) {
     const day = d.getDate();
     const monthNum = d.getMonth();
     const monthsInYear = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Spetember', 'October', 'November', 'December'
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
     ];
     const monthName = monthsInYear[monthNum];
     const date = `${monthName} ${day}`;
