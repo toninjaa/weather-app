@@ -1,10 +1,9 @@
-import * as React from 'react';
 import {
   CircularProgress,
   Dialog,
   DialogContent,
   DialogContentText,
-} from '@material-ui/core';
+} from '@mui/material';
 
 interface Props {
   msg: string,

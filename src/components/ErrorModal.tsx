@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Button,
   Dialog,
@@ -6,7 +5,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-} from '@material-ui/core';
+} from '@mui/material';
 
 interface Props {
   open: boolean,

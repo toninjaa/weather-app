@@ -5,7 +5,7 @@ import LoaderModal from './LoaderModal';
 
 const { useEffect, useState } = React;
 
-function WeekContainer() {
+export function WeekContainer() {
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyStartWeather: [] as any[],
@@ -51,7 +51,6 @@ function WeekContainer() {
       });
     }
   }
-  console.log(weather);
 
   function arrSort(arr: any[]) {
     arr.sort((a, b) => {
@@ -138,5 +137,3 @@ function WeekContainer() {
     </>
   );
 }
-
-export default WeekContainer;

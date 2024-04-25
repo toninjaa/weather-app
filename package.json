@@ -8,23 +8,25 @@
     "node": "19.x"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
+    "@mui/styles": "^5.15.15",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "express": "^4.19.2",
     "gh-pages": "^5.0.0",
-    "material-ui": "^0.20.2",
     "moment": "^2.29.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-scripts": "^5.0.1",
+    "typescript": "^5.4.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

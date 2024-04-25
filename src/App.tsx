@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import WeekContainer from './components/WeekContainer';
+import { WeekContainer } from './components/WeekContainer';
 import Header from './components/Header';
 
 function App() {
