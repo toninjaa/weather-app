@@ -57,7 +57,7 @@ function DayContainer(props: Props) {
   }
 
   function determineIcon(weather: string, time: string) {
-    const env = window.location.href.includes("local") ? "./weather-app" : "."; 
+    const env = window.location.href.includes("local") ? "." : "./weather-app"; 
     if (weather.includes("Snow")) {
       altIcon = "Snowflake Icon";
       return `${env}/snowflake.svg`;
