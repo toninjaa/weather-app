@@ -55,50 +55,48 @@ function DayContainer(props: Props) {
   function handleDetailClose() {
     setShowDetail(false);
   }
-
   function determineIcon(weather: string, time: string) {
-    const env = window.location.href.includes("local") ? "./weather-app" : "."; 
     if (weather.includes("Snow")) {
       altIcon = "Snowflake Icon";
-      return `${env}/snowflake.svg`;
+      return './snowflake.svg';
     }
     if (weather.includes("Rain") || weather.includes("Drizzle") || weather.includes("Showers")) {
       altIcon = "Raindrop Icon";
-      return `${env}/rain.svg`;
+      return './rain.svg';
     }
     if (weather.includes("Sunny")) {
       if (weather.includes("Partly")) {
         altIcon = "Sun With Clouds Icon";
-        return `${env}/partly_cloudy.svg`;
+        return './partly_cloudy.svg';
       }
       altIcon = "Sun Icon";
-      return `${env}/sun.svg`;
+      return './sun.svg';
     }
     if (weather.includes("Cloudy")) {
       if (weather.includes("Partly") && time === "day") {
         altIcon = "Sun With Clouds Icon";
-        return `${env}/partly_cloudy.svg`;
+        return './partly_cloudy.svg';
       }
       if (weather.includes("Partly") && time === "night") {
         altIcon = "Moon WIth Clouds Icon"
-        return `${env}/moon_cloudy.svg`;
+        return './moon_cloudy.svg';
       }
       altIcon = "Cloud Icon";
-      return `${env}/cloud.svg`;
+      return './cloud.svg';
     }
     if (weather.includes("Clear")) {
       if (time === "day") {
         altIcon = "Sun Icon";
-        return `${env}/sun.svg`;
+        return './sun.svg';
       }
       if (time === "night") {
         altIcon = "Moon Icon";
-        return `${env}/moon.svg`;
+        return './moon.svg';
       }
     }
     if (weather.includes("Sleet")) {
       altIcon = "Sleet Icon";
-      return `${env}/sleet.svg`;
+      return './sleet.svg';
     }
   }
 
