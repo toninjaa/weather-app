@@ -5,7 +5,7 @@
   "homepage": "https://toninjaa.github.io/weather-app",
   "proxy": "http://api.openweathermap.org",
   "engines": {
-    "node": "19.x"
+    "node": ">=19.x"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
