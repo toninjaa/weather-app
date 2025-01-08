@@ -11,14 +11,14 @@
   padding: 1em;
 }
 
-.Week-item {
+/* .Week-item {
   align-items: stretch;
   border: 1px solid;
   border-radius: 5px;
   display: grid;
   padding: 0em 1em 1em;
   margin: 0em 0em 1em 1em;
-}
+} */
 
 .Week-header {
   align-items: center;
@@ -59,17 +59,7 @@
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-/* @keyframes icons {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(359deg);
-  }
-} */
-
 .Icons {
   width: 100px;
   justify-self: center;
-  /* animation: icons 2s infinite; */
 }

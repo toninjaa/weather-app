@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import DetailedDayContainer from './DetailedDayContainer';
+import Day from './Day';
 import { DailyWeather } from '../types/Day';
 
 interface Props {
@@ -16,26 +17,13 @@ function DayContainer(props: Props) {
     detail: '',
     time: '',
   });
-  let altIcon = "Weather Icon";
-    
-  function getMonthAndDay(dayWeather: DailyWeather) {
-    const d = new Date(dayWeather.startTime);
-    const day = d.getDate();
-    const monthNum = d.getMonth();
-    const monthsInYear = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const monthName = monthsInYear[monthNum];
-    const date = `${monthName} ${day}`;
-    return date;
-  }
 
   function handleDetailClick(key: number, e: any, time: string) {
     setShowDetail(true);
 
     if (time === "day") {
       setDetail({
-        name: getMonthAndDay(dayData[key]),
+        name: dayData[key].name,
         detail: dayData[key].detailedForecast,
         time: "day",
       });
@@ -43,7 +31,7 @@ function DayContainer(props: Props) {
 
     if (time === "night") {
       setDetail({
-        name: getMonthAndDay(nightData[key]),
+        name: nightData[key].name,
         detail: nightData[key].detailedForecast,
         time: "night",
       });
@@ -54,104 +42,19 @@ function DayContainer(props: Props) {
     setShowDetail(false);
   }
 
-  function determineIcon(weather: string, time: string) {
-    if (weather.includes("Snow")) {
-      altIcon = "Snowflake Icon";
-      return './snowflake.svg';
-    }
-    if (weather.includes("Rain") || weather.includes("Drizzle") || weather.includes("Showers")) {
-      altIcon = "Raindrop Icon";
-      return './rain.svg';
-    }
-    if (weather.includes("Sunny")) {
-      if (weather.includes("Partly")) {
-        altIcon = "Sun With Clouds Icon";
-        return './partly_cloudy.svg';
-      }
-      altIcon = "Sun Icon";
-      return './sun.svg';
-    }
-    if (weather.includes("Cloudy")) {
-      if (weather.includes("Partly") && time === "day") {
-        altIcon = "Sun With Clouds Icon";
-        return './partly_cloudy.svg';
-      }
-      if (weather.includes("Partly") && time === "night") {
-        altIcon = "Moon WIth Clouds Icon"
-        return './moon_cloudy.svg';
-      }
-      altIcon = "Cloud Icon";
-      return './cloud.svg';
-    }
-    if (weather.includes("Clear")) {
-      if (time === "day") {
-        altIcon = "Sun Icon";
-        return './sun.svg';
-      }
-      if (time === "night") {
-        altIcon = "Moon Icon";
-        return './moon.svg';
-      }
-    }
-    if (weather.includes("Sleet")) {
-      altIcon = "Sleet Icon";
-      return './sleet.svg';
-    }
-  }
-
   return (
-    <>
-      {dayData.map((d: DailyWeather, i: number) => (
-        <div key={i} className="Week-item">
-          <h2 className="Day-header">
-            {d.name}
-            <br/>
-            {getMonthAndDay(d)}
-          </h2>
-          <img
-            className="Icons"
-            // src={determineIcon(d.shortForecast, "day")}
-            src={d.icon}
-            alt={altIcon}
-          />
-          <h3>{d.shortForecast}</h3>
-          <h4 className="Day-item">Temp: {d.temperature}°F</h4>
-          <h4>Wind Speed: {d.windSpeed}</h4>
-          
-          <Button
-            variant="contained"
-            onClick={(e) => handleDetailClick(i, e, "day")}
-          >
-            Detailed Forecast
-          </Button>
-        </div>
-      ))}
+    <Stack direction='column' alignItems='center' spacing={2}>
+      <Stack direction='row' spacing={2}>
+        {dayData.map((d: DailyWeather, i: number) => (
+          <Day d={d} i={i} handleDetailClick={handleDetailClick}/>
+        ))}
+      </Stack>
 
-      {nightData.map((n: DailyWeather, i: number) => (
-      <div key={i} className="Week-item">
-        <h2 className="Day-header">
-          {n.name}
-          <br />
-          {getMonthAndDay(n)}
-        </h2>
-        <img
-          className="Icons"
-          // src={determineIcon(n.shortForecast, "night")}
-          src={n.icon}
-          alt={altIcon}
-        />
-        <h4 className="Day-item">{n.shortForecast}</h4>
-        <h4 className="Day-item">Temp: {n.temperature}°F</h4>
-        <h4>Wind Speed: {n.windSpeed}</h4>
-        
-        <Button
-          variant="contained"
-          onClick={(e) => handleDetailClick(i, e, "night")}
-        >
-          Detailed Forecast
-        </Button>
-      </div>
-      ))}
+      <Stack direction='row' spacing={2}>
+        {nightData.map((n: DailyWeather, i: number) => (
+          <Day d={n} i={i} handleDetailClick={handleDetailClick} />
+        ))}
+      </Stack>
 
       {showDetail && (
         <DetailedDayContainer
@@ -161,7 +64,7 @@ function DayContainer(props: Props) {
           onClose={handleDetailClose}
         />
       )}
-    </>
+    </Stack>
   )
 }
 

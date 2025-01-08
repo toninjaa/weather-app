@@ -25,7 +25,7 @@ export default function Header(props: Props) {
     <>
       <AppBar
         sx={{
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.primary.dark,
           justifyContent: 'space-between',
         }}>
         <Toolbar>
