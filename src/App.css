@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color:#607d8b;
+  background-color:#54B2FF;
 }
 
 .Week-container {
@@ -59,17 +59,17 @@
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
-@keyframes icons {
+/* @keyframes icons {
   from {
     transform: rotateY(0deg);
   }
   to {
     transform: rotateY(359deg);
   }
-}
+} */
 
 .Icons {
   width: 100px;
   justify-self: center;
-  animation: icons 2s infinite;
+  /* animation: icons 2s infinite; */
 }

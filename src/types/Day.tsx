@@ -1,4 +1,4 @@
-interface DailyWeather {
+export interface DailyWeather {
   detailedForecast: string,
   endTime: string,
   icon: string,
@@ -13,5 +13,3 @@ interface DailyWeather {
   windDirection: string,
   windSpeed: string,
 }
-
-export default DailyWeather;

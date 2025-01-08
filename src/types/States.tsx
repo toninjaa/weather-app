@@ -1,13 +1,13 @@
 // These are to give some granularity for forecast pulls without needing to pull
 // from another API for forward geocoding since we need lat and long coords
-type State = {
+export type State = {
   Abbr: string,
   Latitude: number,
   Longitude: number,
   Name: string,
 }
 
-const States: State[] = [{
+export const States: State[] = [{
   Abbr: 'AK',
   Latitude: 63.588753,
   Longitude: -154.493062,

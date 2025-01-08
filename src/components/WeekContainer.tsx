@@ -1,44 +1,62 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import DayContainer from './DayContainer';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
+import { State } from '../types/States';
 
-const { useEffect, useState } = React;
+interface Props {
+  state: State,
+}
 
-export function WeekContainer() {
+export function WeekContainer(props: Props) {
+  const { state } = props;
   const [weather, setWeather] = useState({
     fullWeather: [],
     dailyStartWeather: [] as any[],
     dailyEndWeather: [] as any[],
     error: false,
     errorMsg: 'We\'re sorry, the weather API\'s server is temporarily down. Please try again later',
-    loading: true,
+    loading: false,
   });
+
+  function splitDailyData(w: any) {
+    let tmpArrA = [] as any[];
+    let tmpArrB = [] as any[];
+    w.forEach((forecast: any) => {
+      if (forecast.startTime.includes('18:00:00')) {
+        tmpArrB.push(forecast);
+      } else {
+        tmpArrA.push(forecast);
+      }
+    });
+
+    setWeather({
+      ...weather,
+      dailyStartWeather: arrSort(tmpArrA),
+      dailyEndWeather: arrSort(tmpArrB),
+      loading: false,
+    });
+  }
 
   async function retrieveWeatherData() {
     setWeather({
       ...weather,
       loading: true,
     });
-    
-    const weatherURL = 'https://api.weather.gov/points/40.71427,-74.00597'
+
+    const weatherURL = `https://api.weather.gov/points/${state.Latitude},${state.Longitude}`;
+
     const res1 = await fetch(weatherURL);
-    // if (res1.status === 200) {
     if (res1) {
       const data = await res1.json();
       if (data) {
         const nextURL = data.properties.forecast;
         const res2 = await fetch(nextURL);
 
-        // if (res2.status === 200) {
         if (res2) {
           const finalData = await res2.json();
           if (finalData) {
-            setWeather({
-              ...weather,
-              fullWeather: finalData.properties.periods,
-              loading: false,
-            });
+            splitDailyData(finalData.properties.periods);
             return;
           }
         }
@@ -67,25 +85,6 @@ export function WeekContainer() {
     return arr;
   }
 
-  function splitDailyData() {
-    let tmpArrA = [] as any[];
-    let tmpArrB = [] as any[];
-    weather.fullWeather.forEach((forecast: any) => {
-      if (forecast.startTime.includes('18:00:00')) {
-        tmpArrB.push(forecast);
-      } else {
-        tmpArrA.push(forecast);
-      }
-    });
-
-    setWeather({
-      ...weather,
-      dailyStartWeather: arrSort(tmpArrA),
-      dailyEndWeather: arrSort(tmpArrB),
-      loading: false,
-    });
-  }
-
   function handleErrorClose() {
     setWeather({
       ...weather,
@@ -95,33 +94,12 @@ export function WeekContainer() {
   }
 
   useEffect(() => {
-    if (weather.fullWeather.length === 0) {
-      retrieveWeatherData();
-      return;
-    }
-    if (weather.dailyStartWeather.length === 0) {
-      splitDailyData();
-    }
-  
-    // * Force error test
-    // setWeather({
-    //   ...weather,
-    //   error: true,
-    //   errorMsg: 'Sorry, a problem occurred trying to load the weather data. Please refresh the page to try again.',
-    // });
-
-    // * Force loader test
-    // setWeather({
-    //   ...weather,
-    //   loading: true,
-    // });
-  }, [weather.fullWeather.length]);
+    retrieveWeatherData()
+  }, [state]);
 
   return (
     <>
       <LoaderModal msg="Loading Weather Data..." open={weather.loading} />
-
-      <h1 className="Week-header">7 Day Forecast for NYC</h1>
       
       <div className="Week-container">        
         <DayContainer

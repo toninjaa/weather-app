@@ -1,9 +1,7 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { Button } from '@mui/material';
 import DetailedDayContainer from './DetailedDayContainer';
-import DailyWeather from './Day';
-
-const { useState } = React;
+import { DailyWeather } from '../types/Day';
 
 interface Props {
   dayData: DailyWeather[],
@@ -20,7 +18,7 @@ function DayContainer(props: Props) {
   });
   let altIcon = "Weather Icon";
     
-  function getMonthandDay(dayWeather: DailyWeather) {
+  function getMonthAndDay(dayWeather: DailyWeather) {
     const d = new Date(dayWeather.startTime);
     const day = d.getDate();
     const monthNum = d.getMonth();
@@ -37,7 +35,7 @@ function DayContainer(props: Props) {
 
     if (time === "day") {
       setDetail({
-        name: getMonthandDay(dayData[key]),
+        name: getMonthAndDay(dayData[key]),
         detail: dayData[key].detailedForecast,
         time: "day",
       });
@@ -45,7 +43,7 @@ function DayContainer(props: Props) {
 
     if (time === "night") {
       setDetail({
-        name: getMonthandDay(nightData[key]),
+        name: getMonthAndDay(nightData[key]),
         detail: nightData[key].detailedForecast,
         time: "night",
       });
@@ -55,6 +53,7 @@ function DayContainer(props: Props) {
   function handleDetailClose() {
     setShowDetail(false);
   }
+
   function determineIcon(weather: string, time: string) {
     if (weather.includes("Snow")) {
       altIcon = "Snowflake Icon";
@@ -107,11 +106,12 @@ function DayContainer(props: Props) {
           <h2 className="Day-header">
             {d.name}
             <br/>
-            {getMonthandDay(d)}
+            {getMonthAndDay(d)}
           </h2>
           <img
             className="Icons"
-            src={determineIcon(d.shortForecast, "day")}
+            // src={determineIcon(d.shortForecast, "day")}
+            src={d.icon}
             alt={altIcon}
           />
           <h3>{d.shortForecast}</h3>
@@ -132,11 +132,12 @@ function DayContainer(props: Props) {
         <h2 className="Day-header">
           {n.name}
           <br />
-          {getMonthandDay(n)}
+          {getMonthAndDay(n)}
         </h2>
         <img
           className="Icons"
-          src={determineIcon(n.shortForecast, "night")}
+          // src={determineIcon(n.shortForecast, "night")}
+          src={n.icon}
           alt={altIcon}
         />
         <h4 className="Day-item">{n.shortForecast}</h4>
