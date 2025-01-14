@@ -2,6 +2,9 @@ import { createTheme } from "@mui/material";
 
 const Theme = createTheme({
   palette: {
+    background: {
+      default: '#54B2FF',
+    },
     primary: {
       main: '#54B2FF',
       dark: '#0060c8',
