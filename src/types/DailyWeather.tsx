@@ -31,7 +31,6 @@ export interface FullDayWeather {
   nightTemperature: number,
   nightWindSpeed: string,
 }
-// if (firstDate.getTime() < secondDate.getTime()) {
 
 // Example response from weather API
 /*

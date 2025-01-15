@@ -9,24 +9,12 @@ import { FullDayWeather } from '../types/DailyWeather';
 interface Props {
   d: FullDayWeather,
   i: number
-  handleDetailClick: (e: MouseEvent<HTMLElement>) => void, 
+  handleDetailClick: (e: MouseEvent<HTMLElement>, d: FullDayWeather) => void, 
 }
 
 export default function Day(props: Props) {
   const { d, i, handleDetailClick } = props;
   const theme = useTheme();
-
-  // function getMonthAndDay(dayWeather: DailyWeather) {
-  //   const d = new Date(dayWeather.startTime);
-  //   const day = d.getDate();
-  //   const monthNum = d.getMonth();
-  //   const monthsInYear = [
-  //     'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-  //   ];
-  //   const monthName = monthsInYear[monthNum];
-  //   const date = `${monthName} ${day}`;
-  //   return date;
-  // }
 
   return (
     <Paper
@@ -43,40 +31,33 @@ export default function Day(props: Props) {
         alignItems='center'
         justifyContent='space-between'
       >
-        <Typography
-          variant='h6'
-          sx={{ backgroundColor: theme.palette.secondary.dark}}
-        >
-          {d.dayName}
-          <br/>
-          {/* {getMonthAndDay(d)} */}
-        </Typography>
-        
-        <Typography variant='body1'>
-          Temp: {d.dayTemperature}°F
-        </Typography>
+      
+      {d.dayName && (
+        <>
+          <Typography
+            variant='h6'
+          >
+            {d.dayName}
+          </Typography>
 
-        <img
-          src={d.dayIcon}
-          alt={d.dayShortForecast}
-        />
+            <Typography variant='body1'>
+              Temp: {d.dayTemperature}°F
+            </Typography>
 
-        <Typography variant='body1'>
-          {d.dayShortForecast}
-        </Typography>
+            <img
+              src={d.dayIcon}
+              alt={d.dayShortForecast}
+            />
 
-        <Typography variant='body1'>
-          Wind Speed: {d.dayWindSpeed}
-        </Typography>
-        
-        <Button
-          color='primary'
-          variant="contained"
-          onClick={(e) => handleDetailClick(e)}
-          sx={{ marginBottom: 0 }}
-        >
-          Detailed Forecast
-        </Button>
+            <Typography variant='body1'>
+              {d.dayShortForecast}
+            </Typography>
+
+            <Typography variant='body1'>
+              Wind Speed: {d.dayWindSpeed}
+            </Typography>
+          </>
+        )}
 
         <Typography
           variant='h6'
@@ -107,7 +88,7 @@ export default function Day(props: Props) {
         <Button
           color='primary'
           variant="contained"
-          onClick={(e) => handleDetailClick(e)}
+          onClick={(e) => handleDetailClick(e, d)}
           sx={{ marginBottom: 0 }}
         >
           Detailed Forecast
