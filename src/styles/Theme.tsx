@@ -3,22 +3,23 @@ import { createTheme } from "@mui/material";
 const Theme = createTheme({
   palette: {
     background: {
-      default: '#54B2FF',
+      default: '#E5A892',
     },
     primary: {
       main: '#54B2FF',
-      dark: '#0060c8',
-      light: '#b8ddff',
+      dark: '#3E91D5',
+      light: '#ADD0ED',
     },
     secondary: {
-      main: '#ffd466',
-      dark: '#f8884f',
-      light: '#ffdd7a',
+      main: '#ec8c69',
+      dark: '#C46F50',
+      light: '#E5A892',
     },
   },
   typography: {
     fontFamily: [
-      'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif'].join(',')
+      "Georama", 'serif'
+    ].join(',')
   }
 })
 

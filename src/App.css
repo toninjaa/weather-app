@@ -1,0 +1,14 @@
+@keyframes icons {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(359deg);
+  }
+}
+
+.Icons {
+  width: 100px;
+  justify-self: center;
+  animation: icons 2s infinite;
+}

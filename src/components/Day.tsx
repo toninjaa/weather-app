@@ -30,12 +30,14 @@ export default function Day(props: Props) {
         direction='column'
         alignItems='center'
         justifyContent='space-between'
+        spacing={2}
       >
       
       {d.dayName && (
         <>
           <Typography
             variant='h6'
+            sx={{ backgroundColor: theme.palette.primary.dark}}
           >
             {d.dayName}
           </Typography>
@@ -61,11 +63,8 @@ export default function Day(props: Props) {
 
         <Typography
           variant='h6'
-          sx={{ backgroundColor: theme.palette.secondary.dark}}
         >
           {d.nightName}
-          <br/>
-          {/* {getMonthAndDay(d)} */}
         </Typography>
         
         <Typography variant='body1'>

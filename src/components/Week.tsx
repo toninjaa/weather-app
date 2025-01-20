@@ -4,6 +4,7 @@ import ForecastDetailModal from './ForecastDetailModal';
 import Day from './Day';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
+import Today from './Today';
 import { DailyWeather, FullDayWeather } from '../types/DailyWeather';
 import { State } from '../types/States';
 
@@ -142,13 +143,14 @@ export default function Week(props: Props) {
 
   return (
     <>
-      {/* <Stack direction='column' alignItems='center' spacing={2}> */}
+      <Stack direction='column' alignItems='center' spacing={2}>
+        <Today {...weather.forecast[0]} />
         <Stack direction='row' justifyContent='center' spacing={2}>
           {weather.forecast.map((d: FullDayWeather, i: number) => (
             <Day d={d} i={i} handleDetailClick={handleDetailClick} />
           ))}
         </Stack>
-      {/* </Stack> */}
+      </Stack>
 
       <ForecastDetailModal
         dayName={detail.name}
