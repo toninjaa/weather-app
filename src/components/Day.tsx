@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material';
-import { FullDayWeather } from '../types/DailyWeather';
+import { FullDayWeather } from '../types/Weather';
 
 interface Props {
   d: FullDayWeather,

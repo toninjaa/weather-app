@@ -1,63 +1,82 @@
+import { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material';
-import { FullDayWeather } from '../types/DailyWeather';
+import { HalfDayWeather } from '../types/Weather';
 
-export default function Today(props: FullDayWeather) {
-  const {
-    dayIcon,
-    dayName,
-    dayTemperature,
-    dayShortForecast,
-  } = props;
+export default function Today(props: HalfDayWeather) {
+  const [today, setToday] = useState({
+    icon: '',
+    iconAlt: '',
+    // name: '',
+    // temp: '',
+    // forecast: '',
+    isDaytime: true,
+  });
   const theme = useTheme();
-  let altIcon = "Weather Icon";
+  console.log('props', props)
+  
+  function determineIcon(weather: HalfDayWeather) {
+    let icon = './icons/sun.svg';
+    let altIcon = "Weather Icon";
 
-  function determineIcon(weather: string, time: string) {
-    if (weather.includes("Snow")) {
+    if (weather && weather.shortForecast !== undefined) {
+    if (weather.shortForecast.includes("Snow")) {
       altIcon = "Snowflake Icon";
-      return './snowflake.svg';
+      icon = './icons/snowflake.svg';
     }
-    if (weather.includes("Rain") || weather.includes("Drizzle") || weather.includes("Showers")) {
+    if (weather.shortForecast.includes("Rain") || weather.shortForecast.includes("Drizzle") || weather.shortForecast.includes("Showers")) {
       altIcon = "Raindrop Icon";
-      return './rain.svg';
+      icon ='./icons/rain.svg';
     }
-    if (weather.includes("Sunny")) {
-      if (weather.includes("Partly")) {
+    if (weather.shortForecast.includes("Sunny")) {
+      if (weather.shortForecast.includes("Partly")) {
         altIcon = "Sun With Clouds Icon";
-        return './partly_cloudy.svg';
+        icon ='./icons/partly_cloudy.svg';
       }
       altIcon = "Sun Icon";
-      return './sun.svg';
+      icon ='./icons/sun.svg';
     }
-    if (weather.includes("Cloudy")) {
-      if (weather.includes("Partly") && time === "day") {
+    if (weather.shortForecast.includes("Cloudy")) {
+      if (weather.shortForecast.includes("Partly") && weather.isDaytime) {
         altIcon = "Sun With Clouds Icon";
-        return './partly_cloudy.svg';
+        icon ='./icons/partly_cloudy.svg';
       }
-      if (weather.includes("Partly") && time === "night") {
+      if (weather.shortForecast.includes("Partly") && !weather.isDaytime) {
         altIcon = "Moon WIth Clouds Icon"
-        return './moon_cloudy.svg';
+        icon ='./icons/moon_cloudy.svg';
       }
       altIcon = "Cloud Icon";
-      return './cloud.svg';
+      icon ='./icons/cloud.svg';
     }
-    if (weather.includes("Clear")) {
-      if (time === "day") {
+    if (weather.shortForecast.includes("Clear")) {
+      if (weather.isDaytime) {
         altIcon = "Sun Icon";
-        return './sun.svg';
+        icon ='./icons/sun.svg';
       }
-      if (time === "night") {
+      if (!weather.isDaytime) {
         altIcon = "Moon Icon";
-        return './moon.svg';
+        icon ='./icons/moon.svg';
       }
     }
-    if (weather.includes("Sleet")) {
+    if (weather.shortForecast.includes("Sleet")) {
       altIcon = "Sleet Icon";
-      return './sleet.svg';
+      icon ='./icons/sleet.svg';
     }
+
+    setToday({
+      ...today,
+      iconAlt: altIcon,
+      icon: icon,
+    });
   }
+  }
+
+  useEffect(() => {
+    console.log('ue props', props)
+    determineIcon(props)
+  }, [props]);
 
   return (
     <Paper
@@ -78,19 +97,20 @@ export default function Today(props: FullDayWeather) {
             variant='h4'
             color={theme.palette.primary.dark}
           >
-            {dayName}
+            {props.name}
           </Typography>
           <Typography>
-            Temperature: {dayTemperature}°F
+            Temperature: {props.temperature}°F
           </Typography>
           <Typography>
-            {dayShortForecast}
+            {props.shortForecast}
           </Typography>
         </Stack>  
         <Stack>
           <img
-            src={dayIcon}
-            alt={dayShortForecast}
+            src={today.icon}
+            alt={today.iconAlt}
+            className='Icons'
           />
         </Stack>
       </Stack>

@@ -5,7 +5,7 @@ import Day from './Day';
 import ErrorModal from './ErrorModal';
 import LoaderModal from './LoaderModal';
 import Today from './Today';
-import { DailyWeather, FullDayWeather } from '../types/DailyWeather';
+import { HalfDayWeather, FullDayWeather } from '../types/Weather';
 import { State } from '../types/States';
 
 interface Props {
@@ -16,6 +16,7 @@ export default function Week(props: Props) {
   const { state } = props;
   const [weather, setWeather] = useState({
     forecast: [] as FullDayWeather[],
+    currentWeather: {} as HalfDayWeather,
     error: false,
     errorMsg: 'We\'re sorry, the weather API\'s server is temporarily down. Please try again later',
     loading: false,
@@ -27,7 +28,7 @@ export default function Week(props: Props) {
     time: '',
   });
 
-  function combineEntries(day: DailyWeather, night: DailyWeather): FullDayWeather {
+  function halfDaysToFullDays(day: HalfDayWeather, night: HalfDayWeather): FullDayWeather {
     return {
       dayDetailedForecast: day.detailedForecast,
       dayIcon: day.icon,
@@ -46,11 +47,12 @@ export default function Week(props: Props) {
     }
   }
 
-  function splitDailyData(w: DailyWeather[]) {
+  function createFullDayArray(w: HalfDayWeather[]) {
       const combinedForecast = [] as FullDayWeather[];
 
-      w.forEach((a: DailyWeather, i: number) => {
+      w.forEach((a: HalfDayWeather, i: number) => {
         if (w[i+1] !== undefined) {
+          // If we are checking the weather in the evening, there will be no 'day' info so just push night data
           if (i == 0 && new Date(w[0].startTime).getDate() !== new Date(w[1].startTime).getDate()) {
             combinedForecast.push({
               nightDetailedForecast: w[0].detailedForecast,
@@ -63,7 +65,7 @@ export default function Week(props: Props) {
             } as FullDayWeather)
           }
           if (new Date(a.startTime).getDate() === new Date(w[i+1].startTime).getDate()) {
-            combinedForecast.push(combineEntries(a, w[i+1]))
+            combinedForecast.push(halfDaysToFullDays(a, w[i+1]))
           }
         }
       });
@@ -83,6 +85,7 @@ export default function Week(props: Props) {
     
     if (res1) {
       const data = await res1.json();
+      console.log('data', data)
 
       if (data) {
         const nextURL = data.properties.forecast;
@@ -90,19 +93,46 @@ export default function Week(props: Props) {
         
         if (res2) {
           const finalData = await res2.json();
+          console.log('finalData', finalData)
           
           if (finalData) {
-            const combinedForecast = splitDailyData(finalData.properties.periods);
+            const combinedForecast = createFullDayArray(finalData.properties.periods);
 
             setWeather({
               ...weather,
+              currentWeather: {
+                detailedForecast: finalData.properties.periods[0].detailedForecast,
+                endTime: finalData.properties.periods[0].endTime,
+                icon: finalData.properties.periods[0].icon,
+                isDaytime: finalData.properties.periods[0].isDaytime,
+                name: finalData.properties.periods[0].name,
+                number: finalData.properties.periods[0].number,
+                probabilityOfPrecipitation: {
+                  unitCode: finalData.properties.periods[0].probabilityOfPrecipitation.unitCode,
+                  value: finalData.properties.periods[0].probabilityOfPrecipitation.value
+                },
+                shortForecast: finalData.properties.periods[0].shortForecast,
+                startTime: finalData.properties.periods[0].startTime,
+                temperature: finalData.properties.periods[0].temperature,
+                temperatureTrend: finalData.properties.periods[0].temperatureTrend,
+                temperatureUnit: finalData.properties.periods[0].temperatureUnit,
+                windDirection: finalData.properties.periods[0].windDirection,
+                windSpeed: finalData.properties.periods[0].windSpeed,
+              },
               forecast: combinedForecast,
               loading: false,
             });
             
+            console.log('weather', weather)
+
             return;
           }
         }
+        setWeather({
+          ...weather,
+          error: true,
+          loading: false,
+        });
       }
 
       setWeather({
@@ -144,7 +174,7 @@ export default function Week(props: Props) {
   return (
     <>
       <Stack direction='column' alignItems='center' spacing={2}>
-        <Today {...weather.forecast[0]} />
+        <Today {...weather.currentWeather} />
         <Stack direction='row' justifyContent='center' spacing={2}>
           {weather.forecast.map((d: FullDayWeather, i: number) => (
             <Day d={d} i={i} handleDetailClick={handleDetailClick} />

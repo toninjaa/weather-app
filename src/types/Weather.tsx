@@ -1,4 +1,4 @@
-export interface DailyWeather {
+export interface HalfDayWeather {
   detailedForecast: string,
   endTime: string,
   icon: string,
