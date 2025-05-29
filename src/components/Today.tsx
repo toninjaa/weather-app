@@ -9,9 +9,6 @@ export default function Today(props: HalfDayWeather) {
   const [today, setToday] = useState({
     icon: '',
     iconAlt: '',
-    // name: '',
-    // temp: '',
-    // forecast: '',
     isDaytime: true,
   });
   const theme = useTheme();

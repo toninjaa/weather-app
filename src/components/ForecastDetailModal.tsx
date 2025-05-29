@@ -26,7 +26,7 @@ export default function ForecastDetailModal(props: Props){
       <DialogContent>
         <DialogContentText>{dayData}</DialogContentText>
         <DialogActions>
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onClose} variant='contained'>Close</Button>
         </DialogActions>
       </DialogContent>
     </Dialog>

@@ -17,7 +17,7 @@ export default function Day(props: Props) {
   const { d, i, handleDetailClick } = props;
   const theme = useTheme();
   const lg = useMediaQuery(theme.breakpoints.up('lg'))
-  console.log('bp', window.innerWidth)
+
   return (
     <Paper
       key={i}
