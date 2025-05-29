@@ -168,7 +168,7 @@ export default function Week(props: Props) {
         <Stack
           direction={{ md: 'column', lg: 'row' }}
           justifyContent='space-between'
-          spacing={2}
+          spacing={{ xs: 3, sm: 3, md: 2}}
         >
           {weather.forecast.map((d: FullDayWeather, i: number) => (
             <Day key={i} d={d} i={i} handleDetailClick={handleDetailClick} />

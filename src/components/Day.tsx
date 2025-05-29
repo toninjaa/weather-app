@@ -33,15 +33,15 @@ export default function Day(props: Props) {
       }}
     >
       <Stack
-        direction={{ md: 'row', lg: 'column' }}
-        alignItems='stretch'
-        justifyContent='space-evenly'
-        spacing={4}
+        direction={{ xs: 'column', sm: 'row', md: 'row', lg: 'column' }}
+        alignItems={{ xs: 'stretch', sm: 'center', md: 'center', lg: 'stretch' }}
+        justifyContent={{ xs: 'center', sm: 'flex-start', md: 'flex-start', lg: 'space-evenly' }}
+        spacing={{ sm: 4 }}
       >
         <Stack
           sx={lg ? {
             height: '20em',
-          } : {}}
+          } : { width: '15em' }}
         >
           <Stack>
             <Typography
@@ -62,6 +62,7 @@ export default function Day(props: Props) {
                 <img
                   src={d.dayIcon}
                   alt={d.dayShortForecast}
+                  style={{ maxHeight: '138px', maxWidth: '138px' }}
                 />
 
                 <Typography variant='body1'>
@@ -79,7 +80,7 @@ export default function Day(props: Props) {
         <Stack
           sx={lg ? {
             height: '20em',
-          } : {}}
+          } : { width: '15em' }}
         >
           <Stack>
             {d.dayName && ( 
@@ -100,6 +101,7 @@ export default function Day(props: Props) {
             <img
               src={d.nightIcon}
               alt={d.nightShortForecast}
+              style={{ maxHeight: '138px', maxWidth: '138px' }}
             />
 
             <Typography variant='body1'>
