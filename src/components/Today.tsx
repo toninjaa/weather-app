@@ -15,66 +15,72 @@ export default function Today(props: HalfDayWeather) {
     isDaytime: true,
   });
   const theme = useTheme();
-  console.log('props', props)
   
   function determineIcon(weather: HalfDayWeather) {
     let icon = './icons/sun.svg';
     let altIcon = "Weather Icon";
 
     if (weather && weather.shortForecast !== undefined) {
-    if (weather.shortForecast.includes("Snow")) {
-      altIcon = "Snowflake Icon";
-      icon = './icons/snowflake.svg';
-    }
-    if (weather.shortForecast.includes("Rain") || weather.shortForecast.includes("Drizzle") || weather.shortForecast.includes("Showers")) {
-      altIcon = "Raindrop Icon";
-      icon ='./icons/rain.svg';
-    }
-    if (weather.shortForecast.includes("Sunny")) {
-      if (weather.shortForecast.includes("Partly")) {
-        altIcon = "Sun With Clouds Icon";
-        icon ='./icons/partly_cloudy.svg';
+      if (weather.shortForecast.includes("Snow")) {
+        altIcon = "Snowflake Icon";
+        icon = './icons/snowflake.svg';
       }
-      altIcon = "Sun Icon";
-      icon ='./icons/sun.svg';
-    }
-    if (weather.shortForecast.includes("Cloudy")) {
-      if (weather.shortForecast.includes("Partly") && weather.isDaytime) {
-        altIcon = "Sun With Clouds Icon";
-        icon ='./icons/partly_cloudy.svg';
+      if (weather.shortForecast.includes("Rain") || weather.shortForecast.includes("Drizzle") || weather.shortForecast.includes("Showers")) {
+        altIcon = "Raindrop Icon";
+        icon ='./icons/rain.svg';
       }
-      if (weather.shortForecast.includes("Partly") && !weather.isDaytime) {
-        altIcon = "Moon WIth Clouds Icon"
-        icon ='./icons/moon_cloudy.svg';
+      if (weather.shortForecast.includes("Thunder")) {
+        altIcon= "Lightning Icon";
+        icon = './icons/lightning.png';
       }
-      altIcon = "Cloud Icon";
-      icon ='./icons/cloud.svg';
-    }
-    if (weather.shortForecast.includes("Clear")) {
-      if (weather.isDaytime) {
+      if (weather.shortForecast.includes("Sunny")) {
+        if (weather.shortForecast.includes("Partly")) {
+          altIcon = "Sun With Clouds Icon";
+          icon ='./icons/partly_cloudy.svg';
+        }
         altIcon = "Sun Icon";
         icon ='./icons/sun.svg';
       }
-      if (!weather.isDaytime) {
-        altIcon = "Moon Icon";
-        icon ='./icons/moon.svg';
+      if (weather.shortForecast.includes("Cloudy")) {
+        if (weather.shortForecast.includes("Partly") && weather.isDaytime) {
+          altIcon = "Sun With Clouds Icon";
+          icon ='./icons/partly_cloudy.svg';
+        }
+        if (weather.shortForecast.includes("Partly") && !weather.isDaytime) {
+          altIcon = "Moon WIth Clouds Icon"
+          icon ='./icons/moon_cloudy.svg';
+        }
+        altIcon = "Cloud Icon";
+        icon ='./icons/cloud.svg';
       }
-    }
-    if (weather.shortForecast.includes("Sleet")) {
-      altIcon = "Sleet Icon";
-      icon ='./icons/sleet.svg';
-    }
+      if (weather.shortForecast.includes("Clear")) {
+        if (weather.isDaytime) {
+          altIcon = "Sun Icon";
+          icon ='./icons/sun.svg';
+        }
+        if (!weather.isDaytime) {
+          altIcon = "Moon Icon";
+          icon ='./icons/moon.svg';
+        }
+      }
+      if (weather.shortForecast.includes("Sleet")) {
+        altIcon = "Sleet Icon";
+        icon ='./icons/sleet.svg';
+      }
+      if (weather.shortForecast.includes("Haze") || weather.shortForecast.includes("Fog")) {
+        altIcon = "Haze Icon";
+        icon ='./icons/haze.png';
+      }
 
-    setToday({
-      ...today,
-      iconAlt: altIcon,
-      icon: icon,
-    });
-  }
+      setToday({
+        ...today,
+        iconAlt: altIcon,
+        icon: icon,
+      });
+    }
   }
 
   useEffect(() => {
-    console.log('ue props', props)
     determineIcon(props)
   }, [props]);
 

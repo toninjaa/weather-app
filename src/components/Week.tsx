@@ -1,5 +1,7 @@
 import { useEffect, useState, MouseEvent } from 'react';
 import Stack from '@mui/material/Stack';
+import { useTheme } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ForecastDetailModal from './ForecastDetailModal';
 import Day from './Day';
 import ErrorModal from './ErrorModal';
@@ -27,6 +29,9 @@ export default function Week(props: Props) {
     show: false,
     time: '',
   });
+  const theme = useTheme();
+  const lg = useMediaQuery(theme.breakpoints.down('lg'))
+  
 
   function halfDaysToFullDays(day: HalfDayWeather, night: HalfDayWeather): FullDayWeather {
     return {
@@ -85,7 +90,6 @@ export default function Week(props: Props) {
     
     if (res1) {
       const data = await res1.json();
-      console.log('data', data)
 
       if (data) {
         const nextURL = data.properties.forecast;
@@ -93,37 +97,16 @@ export default function Week(props: Props) {
         
         if (res2) {
           const finalData = await res2.json();
-          console.log('finalData', finalData)
           
           if (finalData) {
             const combinedForecast = createFullDayArray(finalData.properties.periods);
 
             setWeather({
               ...weather,
-              currentWeather: {
-                detailedForecast: finalData.properties.periods[0].detailedForecast,
-                endTime: finalData.properties.periods[0].endTime,
-                icon: finalData.properties.periods[0].icon,
-                isDaytime: finalData.properties.periods[0].isDaytime,
-                name: finalData.properties.periods[0].name,
-                number: finalData.properties.periods[0].number,
-                probabilityOfPrecipitation: {
-                  unitCode: finalData.properties.periods[0].probabilityOfPrecipitation.unitCode,
-                  value: finalData.properties.periods[0].probabilityOfPrecipitation.value
-                },
-                shortForecast: finalData.properties.periods[0].shortForecast,
-                startTime: finalData.properties.periods[0].startTime,
-                temperature: finalData.properties.periods[0].temperature,
-                temperatureTrend: finalData.properties.periods[0].temperatureTrend,
-                temperatureUnit: finalData.properties.periods[0].temperatureUnit,
-                windDirection: finalData.properties.periods[0].windDirection,
-                windSpeed: finalData.properties.periods[0].windSpeed,
-              },
+              currentWeather: finalData.properties.periods[0],
               forecast: combinedForecast,
               loading: false,
             });
-            
-            console.log('weather', weather)
 
             return;
           }
@@ -173,11 +156,22 @@ export default function Week(props: Props) {
 
   return (
     <>
-      <Stack direction='column' alignItems='center' spacing={2}>
+      <Stack
+        direction='column'
+        alignItems={{ md: 'flex-start', lg: 'center' }}
+        spacing={2}
+        sx={lg ? {
+          margin: '2em'
+        } : {}}
+      >
         <Today {...weather.currentWeather} />
-        <Stack direction='row' justifyContent='center' spacing={2}>
+        <Stack
+          direction={{ md: 'column', lg: 'row' }}
+          justifyContent='space-between'
+          spacing={2}
+        >
           {weather.forecast.map((d: FullDayWeather, i: number) => (
-            <Day d={d} i={i} handleDetailClick={handleDetailClick} />
+            <Day key={i} d={d} i={i} handleDetailClick={handleDetailClick} />
           ))}
         </Stack>
       </Stack>
