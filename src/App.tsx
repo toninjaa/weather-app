@@ -1,8 +1,9 @@
 import './App.css';
 import { useState } from 'react';
+import CssBaseline from "@mui/material/CssBaseline";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ThemeProvider } from '@mui/material';
-import { WeekContainer } from './components/WeekContainer';
+import Week from './components/Week';
 import Header from './components/Header';
 import { States } from './types/States';
 import Theme from './styles/Theme';
@@ -16,11 +17,10 @@ function App() {
 
   return (
     <ThemeProvider theme={Theme}>
-      <div className="App">
-        <Header handleSelect={handleSearch} state={currentState} />
-        <div style={{ height: '5em' }} />
-        <WeekContainer state={currentState} />
-      </div>
+      <CssBaseline />
+      <Header handleSelect={handleSearch} state={currentState} />
+      <div style={{ height: '5em' }} />
+      <Week state={currentState} />
     </ThemeProvider>
   );
 }

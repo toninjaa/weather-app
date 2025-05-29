@@ -1,81 +1,134 @@
+import { MouseEvent } from 'react';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material';
-import { DailyWeather } from '../types/Day';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { FullDayWeather } from '../types/Weather';
 
 interface Props {
-  d: DailyWeather,
+  d: FullDayWeather,
   i: number
-  handleDetailClick: (key: number, e: any, time: string) => void, 
+  handleDetailClick: (e: MouseEvent<HTMLElement>, d: FullDayWeather) => void, 
 }
 
 export default function Day(props: Props) {
   const { d, i, handleDetailClick } = props;
   const theme = useTheme();
-
-  function getMonthAndDay(dayWeather: DailyWeather) {
-    const d = new Date(dayWeather.startTime);
-    const day = d.getDate();
-    const monthNum = d.getMonth();
-    const monthsInYear = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const monthName = monthsInYear[monthNum];
-    const date = `${monthName} ${day}`;
-    return date;
-  }
+  const lg = useMediaQuery(theme.breakpoints.up('lg'))
 
   return (
     <Paper
-    key={i}
-    elevation={4}
-    sx={{
-      width: '8em',
-      padding: '.5em',
-      backgroundColor: theme.palette.primary.light
-    }}
-  >
-    <Stack
-      direction='column'
-      alignItems='center'
-      justifyContent='space-between'
+      key={i}
+      elevation={4}
+      sx={lg ? {
+        height: '50em',
+        width: '10em',
+        padding: '.5em',
+        backgroundColor: theme.palette.primary.light
+      } : {
+        padding: '.5em',
+        backgroundColor: theme.palette.primary.light
+      }}
     >
-      <Typography
-        variant='h6'
-        sx={{ backgroundColor: theme.palette.secondary.dark}}
+      <Stack
+        direction={{ xs: 'column', sm: 'row', md: 'row', lg: 'column' }}
+        alignItems={{ xs: 'stretch', sm: 'center', md: 'center', lg: 'stretch' }}
+        justifyContent={{ xs: 'center', sm: 'flex-start', md: 'flex-start', lg: 'space-evenly' }}
+        spacing={{ sm: 4 }}
       >
-        {d.name}
-        <br/>
-        {getMonthAndDay(d)}
-      </Typography>
-      
-      <Typography variant='body1'>
-        Temp: {d.temperature}°F
-      </Typography>
+        <Stack
+          sx={lg ? {
+            height: '20em',
+          } : { width: '15em' }}
+        >
+          <Stack>
+            <Typography
+              variant='h6'
+              color={theme.palette.primary.dark}
+            >
+              {d.dayName || d.nightName}
+            </Typography>
+          </Stack>
 
-      <img
-        className="Icons"
-        src={d.icon}
-        alt={d.shortForecast}
-      />
-      <Typography variant='body1'>
-        {d.shortForecast}
-      </Typography>
+          <Stack>
+            {d.dayName && (
+              <>
+                <Typography variant='body1'>
+                  {d.dayTemperature}°F
+                </Typography>
 
-      <Typography variant='body1'>
-        Wind Speed: {d.windSpeed}
-      </Typography>
-      
-      <Button
-        color='primary'
-        variant="contained"
-        onClick={(e) => handleDetailClick(i, e, "day")}
-      >
-        Detailed Forecast
-      </Button>
-    </Stack>
-  </Paper>
+                <img
+                  src={d.dayIcon}
+                  alt={d.dayShortForecast}
+                  style={{ maxHeight: '138px', maxWidth: '138px' }}
+                />
+
+                <Typography variant='body1'>
+                  {d.dayShortForecast}
+                </Typography>
+
+                <Typography variant='body1'>
+                  Wind Speed: {d.dayWindSpeed}
+                </Typography>
+              </>
+            )}
+          </Stack>
+        </Stack>
+
+        <Stack
+          sx={lg ? {
+            height: '20em',
+          } : { width: '15em' }}
+        >
+          <Stack>
+            {d.dayName && ( 
+              <Typography
+                variant='h6'
+                color={theme.palette.primary.dark}
+              >
+                {d.nightName}
+              </Typography>
+            )}
+          </Stack>
+
+          <Stack>
+            <Typography variant='body1'>
+              {d.nightTemperature}°F
+            </Typography>
+
+            <img
+              src={d.nightIcon}
+              alt={d.nightShortForecast}
+              style={{ maxHeight: '138px', maxWidth: '138px' }}
+            />
+
+            <Typography variant='body1'>
+              {d.nightShortForecast}
+            </Typography>
+
+            <Typography variant='body1'>
+              Wind Speed: {d.nightWindSpeed}
+            </Typography>
+          </Stack>
+        </Stack>
+        
+        <Stack
+          sx={lg ? {
+            height: '3em',
+          } : {}}
+        >
+          <Button
+            color='primary'
+            variant='contained'
+            onClick={(e) => handleDetailClick(e, d)}
+            sx={{ marginBottom: 0 }}
+          >
+            Detailed Forecast
+          </Button>
+        </Stack>
+      </Stack>
+    </Paper>
   )
 }
