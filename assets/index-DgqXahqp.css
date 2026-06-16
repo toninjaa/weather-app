@@ -1,0 +1,1 @@
+@keyframes icons{0%{transform:rotateY(0)}to{transform:rotateY(359deg)}}.Icons{justify-self:center;width:100px;animation:2s infinite icons}
